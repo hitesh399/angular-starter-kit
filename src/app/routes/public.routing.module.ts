@@ -14,7 +14,7 @@ import { ForgotPasswordComponent } from '../pages/auth/forgot-password/forgot-pa
         RouterModule.forChild([
             {
                 path: '',
-                pathMatch: 'full',
+                // pathMatch: 'full',
                 component: LoginComponent
             },
             {
