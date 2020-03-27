@@ -3,16 +3,26 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { SharedModule } from './shared/shared.module';
+import { HttpClientModule } from '@angular/common/http';
+import { ModalService } from './shared/modal/modal.service';
+import { ModalComponent } from './shared/modal/modal.component';
+import { SideBarMenu } from './shared/sidebar/menus/menu';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ModalComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    HttpClientModule,
+    AppRoutingModule,
+    SharedModule,
+
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [ModalService, SideBarMenu],
+  bootstrap: [AppComponent],
+  entryComponents: [ModalComponent]
 })
 export class AppModule { }

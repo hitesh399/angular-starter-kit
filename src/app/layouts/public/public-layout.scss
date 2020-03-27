@@ -1,0 +1,16 @@
+.public-wrapper {
+  height: 100vh;
+  .public-content {
+    max-width: 350px;
+    width: 100%;
+    margin: auto;
+    .brand-logo-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+      img {
+        max-height: 100px;
+      }
+    }
+  }
+}

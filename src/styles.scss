@@ -1,1 +1,54 @@
 /* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+body,
+.wrapper {
+  height: 100vh;
+}
+
+.flex {
+  display: flex;
+}
+
+.vertical-center {
+  align-items: center;
+}
+.pull-right {
+  float: right;
+}
+.full-height {
+  height: 100%;
+}
+.dark-backgroup {
+  background: #f4f3ef;
+}
+
+.pagination-wrapper {
+  span.total,
+  .pagination,
+  .per-page {
+    display: flex;
+    align-items: center;
+  }
+  .pagination {
+    margin: auto;
+  }
+}
+
+.invalid-feedback {
+  display: block;
+}
+.modal-open .modal {
+  display: block;
+}
+
+.dynamic-modal {
+  .modal-backdrop {
+    background: rgba(0, 0, 0, 0.6);
+  }
+  .modal-footer {
+    border-top: 0;
+  }
+}
+.form-group.required .control-label:after {
+  content:"*";color:red;
+}

@@ -1,0 +1,14 @@
+[
+    { 
+        "path": "/admin/dashboard", 
+        "title": "Dashboard", 
+        "icon": "fa-tachometer-alt", 
+        "class": ""
+    },
+    { 
+        "path": "/admin/user", 
+        "title": "User", 
+        "icon": "fa-users", 
+        "class": ""
+    }
+]

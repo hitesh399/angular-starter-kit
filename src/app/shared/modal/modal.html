@@ -1,0 +1,27 @@
+<div class="modal-container dynamic-modal" (click) ="clickOutOfModalBox($event)">
+    <div class="modal-backdrop" ></div>
+    <div class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document" (click) ="clickModalBox($event)">
+            <div class="modal-content">
+                <div class="modal-header" *ngIf="title">
+                    <h5 class="modal-title">{{title}}</h5>
+                    <button type="button" class="close" (click)="close($event)" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ng-content></ng-content>
+                </div>
+                <div class="modal-footer" *ngIf="showFooter">
+                    <button class="btn btn-warning" *ngIf="showCancelBtn" (click)="close($event)" [disabled]="disabled">
+                       {{cancelBtnLabel}}
+                    </button>
+
+                    <button class="btn btn-primary" *ngIf="showOKBtn" (click)="done($event)" [disabled]="disabled">
+                        {{disabled ? 'Wait..': okBtnLabel}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

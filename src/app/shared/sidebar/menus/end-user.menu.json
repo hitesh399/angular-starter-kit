@@ -1,0 +1,8 @@
+[
+    { 
+        "path": "/end-user/dashboard", 
+        "title": "Dashboard", 
+        "icon": "fa-tachometer-alt", 
+        "class": ""
+    }
+]

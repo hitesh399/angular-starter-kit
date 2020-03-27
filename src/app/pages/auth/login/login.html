@@ -1,0 +1,52 @@
+<div class="card">
+    <div class="card-body">
+        <div class="container">
+            <!-- <h1>Login</h1> -->
+            <ngb-alert [dismissible]="false" type="danger">
+                <strong>Credentials!</strong> email: eve.holt@reqres.in, Password: cityslicka
+            </ngb-alert>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
+
+                <div class="form-group required">
+                    <label class="control-label" for="email">Email</label>
+                    <input class="form-control has-error" id="email" type="text" formControlName="email" />
+                    <v-message [control]="loginForm.get('email')">Required</v-message>
+
+                </div>
+                <div class="form-group required">
+                    <label class="control-label" for="password">Password*</label>
+                    <input class="form-control" id="password" type="password" formControlName="password" />
+                    <v-message [control]="loginForm.get('password')">Required</v-message>
+                </div>
+                <div class="form-group required">
+                    <label class="control-label">Role: (
+                        This field is here because I am using sample api, which does not provide role management.
+                        )</label>
+                    <!-- Default inline 1-->
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" id="role1" formControlName="role"
+                            value="end-user">
+                        <label class="custom-control-label" for="role1">End User</label>
+                    </div>
+
+                    <!-- Default inline 2-->
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" id="role2" formControlName="role"
+                            value="admin">
+                        <label class="custom-control-label" for="role2">Admin</label>
+                    </div>
+                    <v-message [control]="loginForm.get('role')">Required</v-message>
+                </div>
+
+                <submit-btn class="pull-right">Login</submit-btn>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="container d-flex justify-content-center">
+            <a routerLink="/auth/forgot-password">Forgot Password</a>
+        </div>
+    </div>
+</div>

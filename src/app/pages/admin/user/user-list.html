@@ -1,0 +1,55 @@
+<div class="row ">
+    <div class="col-md-12 d-flex justify-content-end">
+        <a routerLink="/admin/user/create"><i class="fa fa-plus"></i> Create User</a>
+    </div>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Image</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col" width="60" align="right">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngIf="requesting">
+            <td colspan="5">
+                <div style="text-align: center;">
+                    <div class="spinner-border spinner-border-sm" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div> Loading...
+                </div>
+            </td>
+        </tr>
+        <tr *ngFor="let user of users">
+            <th scope="row">{{ user.id }}</th>
+            <td>
+                <img [src]="user.avatar" class="mr-2" style="width: 20px">
+            </td>
+            <td>{{ user.first_name + ' ' + user.last_name}}</td>
+            <td>{{ user.email }}</td>
+            <td>
+                <div class="d-flex justify-content-between">
+                    <a [routerLink]="['/admin/user', user.id,'edit']"><i class="fa fa-pen"></i></a>
+                    <a href="javascript:void(0)" (click)="deletePopup()"><i class="fa fa-trash"></i></a>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+
+</table>
+<div class="d-flex justify-content-between p-2 pagination-wrapper">
+    <span class="total">Total: {{total}}</span>
+    <ngb-pagination style="display: flex; align-items: center;" [disabled]="requesting"
+        (pageChange)="onPageChange($event)" [collectionSize]="total" [(page)]="page" [pageSize]="pageSize">
+    </ngb-pagination>
+
+    <select class="per-page" [disabled]="requesting" class="custom-select" [(ngModel)]="pageSize"
+        (ngModelChange)="whenPageSizeChange($event)" style="width: auto">
+        <option [ngValue]="2">2 items per page</option>
+        <option [ngValue]="4">4 items per page</option>
+        <option [ngValue]="6">6 items per page</option>
+    </select>
+</div>

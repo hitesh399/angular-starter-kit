@@ -1,0 +1,44 @@
+
+
+@import 'core/variables';
+@import 'core/mixins';
+
+// Plugins CSS
+@import "core/plugins/plugin-animate-bootstrap-notify";
+@import "core/plugins/plugin-perfect-scrollbar";
+
+// Core CSS
+@import "core/buttons";
+@import "core/inputs";
+@import "core/typography";
+@import "core/misc";
+@import "core/checkboxes-radio";
+
+
+// components
+@import "core/navbar";
+@import "core/page-header";
+@import "core/dropdown";
+@import "core/alerts";
+@import "core/images";
+@import "core/tables";
+@import "core/sidebar-and-main-panel";
+@import "core/footers";
+@import "core/fixed-plugin";
+
+// cards
+@import "core/cards";
+@import "core/cards/card-plain";
+@import "core/cards/card-chart";
+@import "core/cards/card-user";
+@import "core/cards/card-map";
+@import "core/cards/card-stats";
+
+// angular differences
+@import "core/angular/plugin-ngx-toastr";
+@import "core/angular/sidebar-and-main-panel";
+@import "core/angular/dropdown";
+@import "core/angular/inputs";
+@import "core/angular/fixed-plugin";
+
+@import "core/responsive";

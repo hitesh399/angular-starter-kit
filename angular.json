@@ -28,6 +28,9 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/scss/bootstrap.scss",
+              "node_modules/@fortawesome/fontawesome-free/css/all.css",
+              "src/assets/scss/index.scss",
               "src/styles.scss"
             ],
             "scripts": []

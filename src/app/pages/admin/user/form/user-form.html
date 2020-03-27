@@ -1,0 +1,60 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit(userForm.value)">
+
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input class="form-control has-error" id="email" type="text" formControlName="email" />
+        <v-message [control]="userForm.get('email')">Required</v-message>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-sm-6">
+            <div class="form-group">
+                <label for="first_name">First Name:</label>
+                <input class="form-control has-error" id="first_name" type="text" formControlName="first_name" />
+                <v-message [control]="userForm.get('first_name')">Required</v-message>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6">
+            <div class="form-group">
+                <label for="last_name">Last Name:</label>
+                <input class="form-control has-error" id="last_name" type="text" formControlName="last_name" />
+                <v-message [control]="userForm.get('last_name')">Required</v-message>
+            </div>
+        </div>
+    </div>
+    <h4>User Addresses: </h4>
+    <div class="row" *ngFor="let address of addresses.controls;  let i = index">
+        <ng-container [formGroup]="address">
+            <div class="col-md-10 col-sm-10">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label for="line1">Line 1:</label>
+                            <input class="form-control " id="line1" type="text" formControlName="line1" />
+                            <v-message [control]="address.get('line1')">Required</v-message>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <label for="line2">Line 2:</label>
+                            <input class="form-control " id="line2" type="text" formControlName="line2" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2 col-sm-2 flex" style="justify-content: flex-end; align-items:flex-end">
+                <button *ngIf="i >0" type="button" class="btn btn-danger " (click)="removeAddress(i)">Remove</button>
+                <button type="button" class="btn btn-warning pull-right" (click)="addAddress(i)">Add+</button>
+            </div>
+        </ng-container>
+    </div>
+    <div class="row ">
+        <div class="col-md-6">
+            <submit-btn>{{btnLabel}}</submit-btn>
+        </div>
+        <div class="col-md-6 d-flex justify-content-end">
+            <button class="btn btn-danger" (click)="setErrors()" type="button">Set Custom Errors</button>
+        </div>
+    </div>
+
+</form>
