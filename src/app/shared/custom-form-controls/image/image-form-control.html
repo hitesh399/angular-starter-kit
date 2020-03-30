@@ -5,7 +5,7 @@
   <p *ngIf="imageUrl && !isImage">Please Select a Image Only.</p>
   <div class="hover-item" (click)="$event.stopPropagation()">
       <em class="fa fa-crop" (click)="openCropper($event)"></em>
-      <em class="fa fa-eye" (click)="openCropper($event)"></em>
+      <em class="fa fa-eye" (click)="open($event)"></em>
   </div>
 </div>
 <div *ngIf="isFile" class="image-name-wrapper">

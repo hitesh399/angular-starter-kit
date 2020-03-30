@@ -116,6 +116,10 @@ export class ImageFormControl implements OnDestroy {
         })
     }
 
+    open() {
+        window.open(URL.createObjectURL(this.value), "_blank"); 
+    }
+
     ngOnDestroy() {
         this.changeSubscribe.unsubscribe()
         this.statusChangeSubscribe.unsubscribe()
