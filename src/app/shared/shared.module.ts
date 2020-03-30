@@ -9,6 +9,7 @@ import { FooterModule } from './footer/footer.module';
 import { NavbarModule } from './navbar/navbar.module';
 import { SidebarModule } from './sidebar/sidebar.module';
 import { ValidationModule } from './validation/validation.module';
+import { ImageFormControlModule } from './custom-form-controls/image/image-form-control.module';
 
 @NgModule({
     imports: [
@@ -25,7 +26,8 @@ import { ValidationModule } from './validation/validation.module';
         FooterModule,
         NavbarModule,
         SidebarModule,
-        ValidationModule
+        ValidationModule,
+        ImageFormControlModule
         /** End Shared Modules */
     ],
     exports: [
@@ -41,7 +43,8 @@ import { ValidationModule } from './validation/validation.module';
         FooterModule,
         NavbarModule,
         SidebarModule,
-        ValidationModule
+        ValidationModule,
+        ImageFormControlModule
     ]
 })
 

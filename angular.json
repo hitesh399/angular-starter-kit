@@ -127,6 +127,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "angular8"
 }

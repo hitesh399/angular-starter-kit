@@ -21,6 +21,12 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-3 col-lg-3">
+            <image-form-control [aspectRatio]="1/1" name="profile_image"></image-form-control>
+        </div>
+    </div>
+
     <h4>User Addresses: </h4>
     <div class="row" *ngFor="let address of addresses.controls;  let i = index">
         <ng-container [formGroup]="address">

@@ -27,7 +27,8 @@ export class UserCreateComponent {
             addresses: new FormArray([new FormGroup({
                 line1: new FormControl('', Validators.required),
                 line2: new FormControl('')
-            })])
+            })]),
+            profile_image: new FormControl('', Validators.required)
         })
         this.onSubmit = this.onSubmit.bind(this)
     }

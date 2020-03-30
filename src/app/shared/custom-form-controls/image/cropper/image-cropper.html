@@ -1,0 +1,11 @@
+<div class="image-cropper-wrapper">
+    <image-cropper [imageFile]="file" (imageCropped)="cropped($event)" [transform]="transform"
+        [aspectRatio]="aspectRatio" [hideResizeSquares]="true" [canvasRotation]="canvasRotation">
+    </image-cropper>
+    <button type="button" class="btn btn-info" (click)="moveRight($event)">
+        <em class="fa fa-undo-alt"></em>
+    </button>
+    <button type="button" class="btn btn-info" (click)="moveLeft($event)">
+        <em class="fa fa-undo-alt transform-flip"></em>
+    </button>
+</div>

@@ -11,6 +11,7 @@ export class ModalService {
     options: ModalContract;
     callBack: Function;
     disabled: Boolean = false;
+    childcComponentRef: any;
 
     constructor(private resolver: ComponentFactoryResolver,
         private injector: Injector,
@@ -67,7 +68,7 @@ export class ModalService {
         this.document.body.appendChild(domElem);
 
         this.componentRef.hostView.detectChanges();
-
+        // this.componentRef
         this.document.body.classList.add('modal-open')
     }
     close() {
@@ -84,7 +85,7 @@ export class ModalService {
     }
     done() {
         if (typeof this.callBack === 'function') {
-            this.callBack({ close: this.close, disable: this.disable, enable: this.enable })
+            this.callBack({ close: this.close, disable: this.disable, enable: this.enable, _this: this.childcComponentRef.instance })
         }
     }
     resolveNgContent<T>(content: Content<T>) {
@@ -95,25 +96,20 @@ export class ModalService {
 
         if (content instanceof TemplateRef) {
             const viewRef = content.createEmbeddedView(null);
-            // console.log(viewRef)
-            // In earlier versions, you may need to add this line
-            // this.appRef.attachView(viewRef);
             return [viewRef.rootNodes];
         }
-
-        console.log('I am sds', content)
-
         const factory = this.resolver.resolveComponentFactory(content);
-
-        // const ngContent = this.resolveNgContent(content);
         const componentRef = factory.create(this.injector);
         const props = this.options.componentInputs ? this.options.componentInputs : {}
-        // ().title = 'sjhdsdsd I a shdgsd';
+
         componentRef.instance['modalClose'] = this.close
+        
         Object.keys(props).forEach(propKey => {
             componentRef.instance[propKey] = props[propKey]
         })
+        this.appRef.attachView(componentRef.hostView)
         componentRef.hostView.detectChanges();
+        this.childcComponentRef = componentRef
         return [[componentRef.location.nativeElement], [this.document.createTextNode('Second ng-content')]];
     }
 

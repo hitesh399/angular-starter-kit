@@ -7,7 +7,7 @@ import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ModalService } from './shared/modal/modal.service';
 import { ModalComponent } from './shared/modal/modal.component';
-import { SideBarMenu } from './shared/sidebar/menus/menu';
+import { SideBarMenu } from './shared/sidebar/menus/menu'; 
 
 @NgModule({
   declarations: [
