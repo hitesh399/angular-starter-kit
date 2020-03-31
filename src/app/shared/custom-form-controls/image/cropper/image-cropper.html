@@ -1,11 +1,23 @@
-<div class="image-cropper-wrapper">
-    <image-cropper [imageFile]="file" (imageCropped)="cropped($event)" [transform]="transform"
-        [aspectRatio]="aspectRatio" [hideResizeSquares]="true" [canvasRotation]="canvasRotation">
-    </image-cropper>
-    <button type="button" class="btn btn-info" (click)="moveRight($event)">
-        <em class="fa fa-undo-alt"></em>
-    </button>
-    <button type="button" class="btn btn-info" (click)="moveLeft($event)">
-        <em class="fa fa-undo-alt transform-flip"></em>
-    </button>
+<div class="modal-body">
+    <div class="image-cropper-wrapper">
+        <image-cropper [imageFile]="file" (imageCropped)="cropped($event)" [transform]="transform"
+            [aspectRatio]="aspectRatio" [hideResizeSquares]="true" [canvasRotation]="canvasRotation">
+        </image-cropper>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="d-flex bd-highlight w-100">
+        <button class="btn btn-danger mr-auto bd-highlight" (click)="modal.reject()">
+            Cancel
+        </button>
+        <button type="button" class="btn btn-info  bd-highlight" (click)="moveRight($event)">
+            <em class="fa fa-undo-alt"></em>
+        </button>
+        <button type="button" class="btn btn-info  bd-highlight" (click)="moveLeft($event)">
+            <em class="fa fa-undo-alt transform-flip"></em>
+        </button>
+        <button class="btn btn-primary  bd-highlight" (click)="modal.done()">
+            Crop
+        </button>
+      </div>
 </div>

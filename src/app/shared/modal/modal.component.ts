@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
     selector: 'app-modal',
@@ -8,13 +8,15 @@ export class ModalComponent implements OnInit {
 
     title: String = '';
     disabled: Boolean = false;
-    isCallBack: Boolean = false;
     showCancelBtn: Boolean = true;
     cancelBtnLabel: String = 'Cancel';
     showOKBtn: Boolean = true;
     okBtnLabel: String = 'Ok';
     showFooter: Boolean = true
     modal: any;
+    insideModalBody: Boolean = true
+    persistent: Boolean = false
+
     constructor() { }
 
     ngOnInit() {
@@ -22,23 +24,21 @@ export class ModalComponent implements OnInit {
 
     close() {
         if (this.disabled) return
-        this.modal.close()
+        this.modal.reject()
     }
     clickModalBox(event) {
         event.stopPropagation()
     }
     clickOutOfModalBox(event) {
+        console.log('I am outside', this.persistent)
+        if (this.persistent) return
         event.preventDefault()
         this.close()
     }
     done(event) {
         if (this.disabled) return
         event.preventDefault()
-        if (typeof this.isCallBack) {
-            this.modal.done()
-        } else {
-            this.close()
-        }
+        this.modal.done()
     }
 
 }

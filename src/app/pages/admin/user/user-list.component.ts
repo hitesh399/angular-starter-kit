@@ -33,14 +33,17 @@ export class UserListComponent implements OnInit {
 
     }
     deletePopup() {
-        this.modal.open('Are you sure to delete this record?', ({ disable, enable, close }) => {
-            disable()
-            setTimeout(() => {
-                this.toast.success('Delete Successfully!')
-                close()
-                this.fetchList()
-            }, 1000)
-        }, { title: 'Delete User!' })
+        this.modal.open('Are you sure to delete this record?', { title: 'Delete User!' })
+            .then(({ disable, enable, close }) => {
+                disable()
+                setTimeout(() => {
+                    this.toast.success('Delete Successfully!')
+                    close()
+                    this.fetchList()
+                }, 1000)
+            }).catch(() => {
+                console.log('Cancel...')
+            })
     }
     fetchList() {
         this.requesting = true

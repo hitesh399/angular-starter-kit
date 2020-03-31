@@ -2,6 +2,7 @@ import { Component, Input, TemplateRef, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 
 import { FormActAs } from 'src/app/contracts/common.contract';
+import { ValidationService } from 'src/app/shared/validation/validation.service';
 
 @Component({
     templateUrl: './user-form.html',
@@ -13,8 +14,9 @@ export class UserFormComponent implements OnInit {
     @Input() actAs: FormActAs
     @Input() btnLabel: String = 'Create'
 
+    constructor(private validationService: ValidationService) { }
     ngOnInit() {
-        // console.log('this', this)
+        console.log('this', this.userForm)
     }
 
     addAddress(index) {
@@ -30,7 +32,17 @@ export class UserFormComponent implements OnInit {
     }
     get addresses(): FormArray {
         return this.userForm.get('addresses') as FormArray
+    }
 
+    get fileRules() {
+        return [Validators.required, this.validationService.file({
+            acceptedFiles: 'image/*',
+            maxFileSize: 1,
+            crop: true
+        })]
+    }
+    get images(): FormArray {
+        return this.userForm.get('profile_images') as FormArray
     }
     setErrors() {
         let errors = {

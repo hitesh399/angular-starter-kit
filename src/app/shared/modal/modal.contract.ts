@@ -5,5 +5,7 @@ export interface ModalContract {
     cancelBtnLabel?: String,
     showOKBtn?: Boolean,
     okBtnLabel?: String,
-    showFooter?: Boolean
+    showFooter?: Boolean,
+    insideModalBody?: Boolean,
+    persistent?: Boolean
 }

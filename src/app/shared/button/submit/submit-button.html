@@ -1,4 +1,4 @@
-<button class="btn btn-primary" [style]="style" type="submit" [disabled]="isDisabled || isInvalid">
+<button class="btn btn-primary" [style]="style" type="submit" [disabled]="isDisabled">
     <span *ngIf="isDisabled" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
     <ng-content *ngIf="!isDisabled"></ng-content>
     {{isDisabled ? 'Requesting...' : '' }}

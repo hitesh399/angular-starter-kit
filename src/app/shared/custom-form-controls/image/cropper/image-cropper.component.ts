@@ -10,6 +10,8 @@ export class ImageControlCropperComponent {
     @Input() file: File
     @Input() aspectRatio: number
 
+    modal: Object
+
     public transform = {
         scale: 1,
         rotate: 0,
@@ -33,15 +35,5 @@ export class ImageControlCropperComponent {
             this.canvasRotation = 0
         }
         this.canvasRotation = this.canvasRotation + 45
-    }
-    zoomInOut(event) {
-        const zoom = parseInt(event.target.value)
-        console.log('zoom', zoom)
-    }
-    flipHorizontal(){
-        this.transform.flipH = !this.transform.flipH 
-    }
-    flipVertical() {
-
     }
 }

@@ -1,10 +1,23 @@
 import { Injector, Injectable } from '@angular/core';
+import { FileRulesContract, fileValidation } from './file.validate';
+import { FormControl, ValidationErrors, AsyncValidatorFn } from '@angular/forms';
+
+export interface ValidationServiceContract {
+  getValidatorErrorMessage(validatorName: string, validatorValue?: any);
+
+  creditCardValidator(control: FormControl);
+  emailValidator(control: FormControl): any;
+  passwordValidator(control: FormControl): any;
+  file(rules: FileRulesContract): AsyncValidatorFn
+
+}
 
 @Injectable({
   providedIn: 'root'
 })
-export class ValidationService {
-  static getValidatorErrorMessage(validatorName: string, validatorValue?: any) {
+
+export class ValidationService implements ValidationServiceContract {
+  getValidatorErrorMessage(validatorName: string, validatorValue?: any) {
     let config = {
       required: 'Required',
       invalidCreditCard: 'Is invalid credit card number',
@@ -18,7 +31,7 @@ export class ValidationService {
     return config[validatorName];
   }
 
-  static creditCardValidator(control) {
+  creditCardValidator(control: FormControl) {
     // Visa, MasterCard, American Express, Diners Club, Discover, JCB
     if (
       control.value.match(
@@ -31,7 +44,7 @@ export class ValidationService {
     }
   }
 
-  static emailValidator(control) {
+  emailValidator(control: FormControl) {
     // RFC 2822 compliant regex
     if (
       control.value.match(
@@ -44,13 +57,18 @@ export class ValidationService {
     }
   }
 
-  static passwordValidator(control) {
+  passwordValidator(control: FormControl) {
     // {6,100}           - Assert password is between 6 and 100 characters
     // (?=.*[0-9])       - Assert a string has at least one number
     if (control.value.match(/^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{6,100}$/)) {
       return null;
     } else {
       return { invalidPassword: true };
+    }
+  }
+  file(rules: FileRulesContract): AsyncValidatorFn {
+    return function (control: FormControl) {
+      return fileValidation(control.value, rules)
     }
   }
 }

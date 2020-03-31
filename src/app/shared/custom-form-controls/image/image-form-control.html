@@ -1,11 +1,13 @@
+
 <div [ngClass]="{'image-control-wrapper':  true, 'd-flex': true, 'has-image': isFile}" (click)="openBrowser($event)">
-  <input type="file" [name]="name" (change)="onFileChange($event)">
+  <input type="file" [id]="ID" (change)="onFileChange($event)">
   <em class="fa fa-image" *ngIf="!imageUrl;"></em>
   <img [src]="imageUrl" *ngIf="isImage && imageUrl" />
   <p *ngIf="imageUrl && !isImage">Please Select a Image Only.</p>
   <div class="hover-item" (click)="$event.stopPropagation()">
-      <em class="fa fa-crop" (click)="openCropper($event)"></em>
+      <em class="fa fa-crop" *ngIf="aspectRatio" (click)="openCropper($event)"></em>
       <em class="fa fa-eye" (click)="open($event)"></em>
+      <em class="fa fa-file" (click)="openBrowser($event)"></em>
   </div>
 </div>
 <div *ngIf="isFile" class="image-name-wrapper">

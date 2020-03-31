@@ -12,6 +12,8 @@ export class ModalService {
     callBack: Function;
     disabled: Boolean = false;
     childcComponentRef: any;
+    resloveFnc: Function;
+    rejectFnc: Function;
 
     constructor(private resolver: ComponentFactoryResolver,
         private injector: Injector,
@@ -23,59 +25,66 @@ export class ModalService {
         this.enable = this.enable.bind(this)
     }
 
-    open<T>(content: Content<T>, callBack?: Function, options: ModalContract = {}) {
-        this.options = options
-        const factory = this.resolver.resolveComponentFactory(ModalComponent);
-        // console.log(callBack, 'callBack')
-        this.callBack = callBack
-        // console.log('factory', factory)
-        // console.log('@@')
-        const ngContent = this.resolveNgContent(content);
+    open<T>(content: Content<T>, options: ModalContract = {}) {
 
-        this.componentRef = factory.create(this.injector, ngContent);
+        return new Promise((resolve, reject) => {
+            this.resloveFnc = resolve
+            this.rejectFnc = reject
+            this.options = options
+            const factory = this.resolver.resolveComponentFactory(ModalComponent);
+            const ngContent = this.resolveNgContent(content);
+            this.componentRef = factory.create(this.injector, ngContent);
 
 
-        (<ModalComponent>this.componentRef.instance).modal = this
+            (<ModalComponent>this.componentRef.instance).modal = this
 
-        /**
-         * When User passed A Call Back funciton
-         */
-        if (this.callBack)
-            (<ModalComponent>this.componentRef.instance).isCallBack = true;
+            const { title, insideModalBody, persistent, showCancelBtn, cancelBtnLabel, showOKBtn, okBtnLabel, showFooter } = this.options
+            if (title)
+                (<ModalComponent>this.componentRef.instance).title = title;
 
-        const { title, showCancelBtn, cancelBtnLabel, showOKBtn, okBtnLabel, showFooter } = this.options
-        if (title)
-            (<ModalComponent>this.componentRef.instance).title = title;
+            if (persistent)
+                (<ModalComponent>this.componentRef.instance).persistent = persistent;
 
-        if (showCancelBtn)
-            (<ModalComponent>this.componentRef.instance).showCancelBtn = showCancelBtn;
+            if (showCancelBtn)
+                (<ModalComponent>this.componentRef.instance).showCancelBtn = showCancelBtn;
 
-        if (cancelBtnLabel)
-            (<ModalComponent>this.componentRef.instance).cancelBtnLabel = cancelBtnLabel;
+            if (cancelBtnLabel)
+                (<ModalComponent>this.componentRef.instance).cancelBtnLabel = cancelBtnLabel;
 
-        if (showOKBtn)
-            (<ModalComponent>this.componentRef.instance).showOKBtn = showOKBtn;
+            if (showOKBtn)
+                (<ModalComponent>this.componentRef.instance).showOKBtn = showOKBtn;
 
-        if (okBtnLabel)
-            (<ModalComponent>this.componentRef.instance).okBtnLabel = okBtnLabel;
+            if (okBtnLabel)
+                (<ModalComponent>this.componentRef.instance).okBtnLabel = okBtnLabel;
 
-        if (showFooter)
-            (<ModalComponent>this.componentRef.instance).showFooter = showFooter;
+            if (showFooter)
+                (<ModalComponent>this.componentRef.instance).showFooter = showFooter;
 
-        this.appRef.attachView(this.componentRef.hostView)
+            if (insideModalBody !== undefined)
+                (<ModalComponent>this.componentRef.instance).insideModalBody = insideModalBody;
 
-        const domElem = (this.componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
-        this.document.body.appendChild(domElem);
+            this.appRef.attachView(this.componentRef.hostView)
 
-        this.componentRef.hostView.detectChanges();
-        // this.componentRef
-        this.document.body.classList.add('modal-open')
+            const domElem = (this.componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
+            this.document.body.appendChild(domElem);
+
+            this.componentRef.hostView.detectChanges();
+            // this.componentRef
+            this.document.body.classList.add('modal-open')
+        })
+
     }
-    close() {
+    close(data: any) {
         this.appRef.detachView(this.componentRef.hostView);
         this.componentRef.destroy();
-
         this.document.body.classList.remove('modal-open')
+        this.resloveFnc(data)
+    }
+    reject(data: any): void {
+        this.appRef.detachView(this.componentRef.hostView);
+        this.componentRef.destroy();
+        this.document.body.classList.remove('modal-open')
+        this.rejectFnc(data)
     }
     disable() {
         (<ModalComponent>this.componentRef.instance).disabled = true
@@ -83,15 +92,20 @@ export class ModalService {
     enable() {
         (<ModalComponent>this.componentRef.instance).disabled = false
     }
-    done() {
-        if (typeof this.callBack === 'function') {
-            this.callBack({ close: this.close, disable: this.disable, enable: this.enable, _this: this.childcComponentRef.instance })
-        }
+    done(data: any) {
+        this.resloveFnc(
+            {
+                close: this.close,
+                disable: this.disable,
+                enable: this.enable,
+                _this: this.childcComponentRef.instance
+            }
+        )
     }
     resolveNgContent<T>(content: Content<T>) {
         if (typeof content === 'string') {
             const element = this.document.createTextNode(content);
-            return [[element], [this.document.createTextNode('Second ng-content')]];
+            return [[element], [element]];
         }
 
         if (content instanceof TemplateRef) {
@@ -102,15 +116,14 @@ export class ModalService {
         const componentRef = factory.create(this.injector);
         const props = this.options.componentInputs ? this.options.componentInputs : {}
 
-        componentRef.instance['modalClose'] = this.close
-        
+        componentRef.instance['modal'] = this
         Object.keys(props).forEach(propKey => {
             componentRef.instance[propKey] = props[propKey]
         })
         this.appRef.attachView(componentRef.hostView)
         componentRef.hostView.detectChanges();
         this.childcComponentRef = componentRef
-        return [[componentRef.location.nativeElement], [this.document.createTextNode('Second ng-content')]];
+        return [[componentRef.location.nativeElement], [componentRef.location.nativeElement]];
     }
 
 }
