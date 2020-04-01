@@ -16,7 +16,7 @@ export interface FileRulesContract {
     maxImageDimensions?: [number, number],
     exactImageDimensions?: [number, number],
     message?: { [key: string]: string | Function },
-    crop?: Boolean
+    crop?: boolean
 }
 
 export async function fileValidation(file: File | Blob | null, rules: FileRulesContract) {
@@ -50,7 +50,7 @@ export async function fileValidation(file: File | Blob | null, rules: FileRulesC
 
         const fReader = new FileReader();
 
-        fReader.onload = function (e) {
+        fReader.onload = function (e: any) {
 
             let attribues: { [key: string]: any } = {
                 maxFileSize,

@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { ToastService } from 'src/app/shared/toast/toast-service';
 import { SingleResourceContract } from 'src/app/contracts/single-resource.contract';
 import { UserCreateComponent } from '../create/user-create.component';
+import { ValidationService } from 'src/app/shared/validation/validation.service';
 
 
 @Component({
@@ -14,17 +15,18 @@ import { UserCreateComponent } from '../create/user-create.component';
 export class UserEditComponent extends UserCreateComponent implements OnInit {
 
     public userForm: FormGroup;
-    public userId: Number;
+    public userId: number;
 
     constructor(
         protected fromBuilder: FormBuilder,
         protected http: HttpClient,
         protected route: ActivatedRoute,
         protected toast: ToastService,
-        protected router: Router
+        protected router: Router,
+        protected validationService: ValidationService
 
     ) {
-        super(fromBuilder, http, route, toast, router)
+        super(fromBuilder, http, route, toast, router, validationService)
 
         this.route.params.subscribe((response) => {
             this.userId = parseInt(response.id)
@@ -45,7 +47,7 @@ export class UserEditComponent extends UserCreateComponent implements OnInit {
     }
     ngOnInit() {
         // console.log('Router', this.route)
-        // let userId = 
+        // let userId =
         this.userForm.disable()
         this.http.get(`users/${this.userId}`).forEach((response: SingleResourceContract<Object>) => {
             // console.log('Response', response)
