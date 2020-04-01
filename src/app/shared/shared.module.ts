@@ -10,6 +10,7 @@ import { NavbarModule } from './navbar/navbar.module';
 import { SidebarModule } from './sidebar/sidebar.module';
 import { ValidationModule } from './validation/validation.module';
 import { ImageFormControlModule } from './custom-form-controls/image/image-form-control.module';
+import { FileFormControlModule } from './custom-form-controls/file/file-form-control.module';
 
 @NgModule({
     imports: [
@@ -27,7 +28,8 @@ import { ImageFormControlModule } from './custom-form-controls/image/image-form-
         NavbarModule,
         SidebarModule,
         ValidationModule,
-        ImageFormControlModule
+        ImageFormControlModule,
+        FileFormControlModule
         /** End Shared Modules */
     ],
     exports: [
@@ -44,7 +46,8 @@ import { ImageFormControlModule } from './custom-form-controls/image/image-form-
         NavbarModule,
         SidebarModule,
         ValidationModule,
-        ImageFormControlModule
+        ImageFormControlModule,
+        FileFormControlModule
     ]
 })
 

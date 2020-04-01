@@ -1,5 +1,6 @@
 .image-control-wrapper {
-  max-width: 100px;
+  width: 100px;
+  max-width: 100%;
   min-height: 100px;
   align-items: center;
   justify-content: center;
@@ -33,3 +34,16 @@
 .has-image:hover > .hover-item {
   display: flex
 }
+.image-name-wrapper {
+  width: 100px;
+  max-width: 100%;
+  word-break: break-all;
+}
+.image-item-container{
+  flex: 1;
+  margin: 0 10px 10px 0;
+}
+
+.image-item-container+.image-item-container{
+  margin-left: 5px;
+ }

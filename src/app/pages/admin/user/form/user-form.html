@@ -1,23 +1,22 @@
-<form [formGroup]="userForm" (ngSubmit)="onSubmit(userForm.value)" #myform="ngForm">
-
+<div [formGroup]="userForm" #myform="ngForm">
     <div class="form-group">
         <label for="email">Email:</label>
         <input class="form-control has-error" id="email" type="text" formControlName="email" />
-        <v-message [control]="userForm.get('email')" [submitted]="myform.submitted">Required</v-message>
+        <v-message [control]="userForm.get('email')" [submitted]="submitted">Required</v-message>
     </div>
     <div class="row">
         <div class="col-md-6 col-sm-6">
             <div class="form-group">
                 <label for="first_name">First Name:</label>
                 <input class="form-control has-error" id="first_name" type="text" formControlName="first_name" />
-                <v-message [control]="userForm.get('first_name')" [submitted]="myform.submitted">Required</v-message>
+                <v-message [control]="userForm.get('first_name')" [submitted]="submitted">Required</v-message>
             </div>
         </div>
         <div class="col-md-6 col-sm-6">
             <div class="form-group">
                 <label for="last_name">Last Name:</label>
                 <input class="form-control has-error" id="last_name" type="text" formControlName="last_name" />
-                <v-message [control]="userForm.get('last_name')" [submitted]="myform.submitted">Required</v-message>
+                <v-message [control]="userForm.get('last_name')" [submitted]="submitted">Required</v-message>
             </div>
         </div>
     </div>
@@ -40,14 +39,29 @@
                 </div>
 
             </div>
-            <div class="col-md-3 col-lg-3 col-sm-3 col-xs-12" *ngFor="let image of images.controls;  let i = index">
-                <image-form-control [aspectRatio]="4/3" [formControlName]="i" (onImageChange)="imageChange($event)">
+            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
+                <div class="d-flex flex-wrap">
+                    <div *ngFor="let image of images.controls;  let i = index">
+                        <image-form-control [aspectRatio]="1/1" [formControlName]="i"
+                            (onImageChange)="imageChange($event)">
 
-                </image-form-control>
-                <v-message [control]="images.controls[i]" [submitted]="myform.submitted"></v-message>
+                        </image-form-control>
+                        <v-message [control]="images.controls[i]" [submitted]="submitted"></v-message>
+                    </div>
+                </div>
             </div>
+
         </div>
     </ng-container>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="certifcate_file">Certifcate File:</label>
+                <file-form-control formControlName="single_file"></file-form-control>
+                <v-message [control]="userForm.get('single_file')" [submitted]="submitted"></v-message>
+            </div>
+        </div>
+    </div>
 
     <h4>User Addresses: </h4>
     <div class="row" *ngFor="let address of addresses.controls;  let i = index">
@@ -55,17 +69,18 @@
             <div class="col-md-10 col-sm-10">
                 <div class="row">
                     <div class="col-md-3 col-sm-3 ">
-                        <div class="form-group w-100 h-100 d-flex" style="align-items: center; justify-content: center;">
+                        <div class="form-group w-100 h-100 d-flex"
+                            style="align-items: center; justify-content: center;">
                             <image-form-control formControlName="proof_file"></image-form-control>
-                            <v-message [control]="address.get('proof_file')" [submitted]="myform.submitted">Required
+                            <v-message [control]="address.get('proof_file')" [submitted]="submitted">Required
                             </v-message>
                         </div>
                     </div>
-                    <div class="col-md-9 col-sm-9" >
+                    <div class="col-md-9 col-sm-9">
                         <div class="form-group">
                             <label for="line1">Line 1:</label>
                             <input class="form-control " id="line1" type="text" formControlName="line1" />
-                            <v-message [control]="address.get('line1')" [submitted]="myform.submitted">Required
+                            <v-message [control]="address.get('line1')" [submitted]="submitted">Required
                             </v-message>
                         </div>
                         <div class="form-group">
@@ -76,7 +91,8 @@
                 </div>
             </div>
 
-            <div class="col-md-2 col-sm-2 flex" style="justify-content: space-evenly; flex-direction: column; align-items:center">
+            <div class="col-md-2 col-sm-2 flex"
+                style="justify-content: space-evenly; flex-direction: column; align-items:center">
                 <button *ngIf="i >0" type="button" class="btn btn-danger " (click)="removeAddress(i)">Remove</button>
                 <button type="button" class="btn btn-warning pull-right" (click)="addAddress(i)">Add+</button>
             </div>
@@ -91,4 +107,4 @@
         </div>
     </div>
 
-</form>
+</div>

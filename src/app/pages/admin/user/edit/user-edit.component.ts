@@ -12,7 +12,7 @@ import { ValidationService } from 'src/app/shared/validation/validation.service'
     templateUrl: './user-edit.html',
     selector: 'user-edit-cmp',
 })
-export class UserEditComponent extends UserCreateComponent implements OnInit {
+export class UserEditComponent  implements OnInit {
 
     public userForm: FormGroup;
     public userId: number;
@@ -26,18 +26,19 @@ export class UserEditComponent extends UserCreateComponent implements OnInit {
         protected validationService: ValidationService
 
     ) {
-        super(fromBuilder, http, route, toast, router, validationService)
-
+        this.userForm = this.fromBuilder.group({
+            user: []
+        })
         this.route.params.subscribe((response) => {
             this.userId = parseInt(response.id)
         });
     }
 
-    onSubmit(values) {
+    onSubmit() {
+        
         if (this.userForm.invalid) return
-
         this.userForm.disable()
-        this.http.put(`users/${this.userId}`, values).forEach((res) => {
+        this.http.put(`users/${this.userId}`,  this.userForm.value.user).forEach((res) => {
             this.userForm.enable()
             this.router.navigateByUrl('/admin/user')
             this.toast.success('User has been updated successfully.')
@@ -46,12 +47,11 @@ export class UserEditComponent extends UserCreateComponent implements OnInit {
         })
     }
     ngOnInit() {
-        // console.log('Router', this.route)
-        // let userId =
+        
         this.userForm.disable()
         this.http.get(`users/${this.userId}`).forEach((response: SingleResourceContract<Object>) => {
             // console.log('Response', response)
-            this.userForm.patchValue(response.data)
+            this.userForm.controls.user.setValue(response.data)
             this.userForm.enable()
         })
     }

@@ -1,0 +1,16 @@
+.file-container {
+    .choose-btn {
+        margin: 0;
+    }
+    .image-icon-container {
+        border: 1px dashed #666666;
+        width: 60px;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+            width: 100%;
+        }
+    }
+}

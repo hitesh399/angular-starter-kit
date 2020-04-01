@@ -1,3 +1,4 @@
-<user-frm-cmp btnLabel="Update" [userForm]="userForm" [onSubmit]="onSubmit" initialTemplate="save">
+<form [formGroup]="userForm" (ngSubmit)="onSubmit(userForm)"  #myform="ngForm">
+    <user-frm-cmp formControlName="user" btnLabel="update" [submitted]="myform.submitted"></user-frm-cmp>
 
-</user-frm-cmp>
+</form>

@@ -12,7 +12,7 @@ import { ValidationService } from 'src/app/shared/validation/validation.service'
 })
 export class UserCreateComponent {
 
-    public userForm: FormGroup;
+    public form: FormGroup;
 
     constructor(
         protected fromBuilder: FormBuilder,
@@ -24,38 +24,22 @@ export class UserCreateComponent {
 
     ) {
 
-        
-        this.userForm = this.fromBuilder.group({
-            email: ['', [Validators.required, Validators.email]],
-            first_name: ['', Validators.required],
-            last_name: ['', Validators.required],
-            addresses: new FormArray([new FormGroup({
-                line1: new FormControl('', Validators.required),
-                line2: new FormControl(''),
-                proof_file: new FormControl('', Validators.required, validationService.file({
-                    maxFileSize: 1
-                }))
-            })]),
-            profile_images: new FormArray([new FormControl('', Validators.required, validationService.file({
-                acceptedFiles: 'image/*',
-                maxFileSize: 1,
-                crop: true
-            }))])
+
+        this.form = this.fromBuilder.group({
+            user: []
         })
-        this.onSubmit = this.onSubmit.bind(this)
     }
-    onSubmit(values) {
+    onSubmit() {
         
-        this.userForm.markAsTouched()
-        console.log('Values', values, this.userForm)
-        if (this.userForm.invalid) return
-        this.userForm.disable()
-        this.http.post('users', values).forEach((res) => {
-            this.userForm.enable()
+        console.log('this.form', this.form)
+        if (this.form.invalid) return
+        this.form.disable()
+        this.http.post('users', this.form.value.user).forEach((res) => {
+            this.form.enable()
             this.router.navigateByUrl('/admin/user')
             this.toast.success('User has been created successfully.')
         }).catch(() => {
-            this.userForm.enable()
+            this.form.enable()
         })
     }
 }

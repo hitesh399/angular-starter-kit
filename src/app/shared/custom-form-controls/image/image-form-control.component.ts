@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, forwardRef, TemplateRef, Output, EventEmitter, HostBinding } from "@angular/core";
+import { Component, Input, OnDestroy, forwardRef, TemplateRef, Output, EventEmitter, HostBinding, OnInit } from "@angular/core";
 import { ControlContainer, FormGroup, FormControl, AbstractControl, FormArray, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ModalService } from '../../modal/modal.service';
@@ -24,7 +24,7 @@ export interface FileChnageEvent {
     }
   ]
 })
-export class ImageFormControlComponent implements OnDestroy, ControlValueAccessor {
+export class ImageFormControlComponent implements OnInit, OnDestroy, ControlValueAccessor {
 
   public myForm: FormGroup | FormArray;
   public imageUrl: string | ArrayBuffer;
@@ -45,12 +45,12 @@ export class ImageFormControlComponent implements OnDestroy, ControlValueAccesso
 
   public ID: string = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
-  private subscriptions: Subscription[] = []
+  protected subscriptions: Subscription[] = []
 
-  @HostBinding('style.width') width: string = '100%';
+  // @HostBinding('style.width') width: string = '100%';
   constructor(
-    private controlContainer: ControlContainer,
-    private modal: ModalService,
+    protected controlContainer: ControlContainer,
+    protected modal: ModalService,
 
   ) {
     this.changeBusyStatus = this.changeBusyStatus.bind(this)
@@ -80,7 +80,7 @@ export class ImageFormControlComponent implements OnDestroy, ControlValueAccesso
     // throw new Error("Method not implemented.");
   }
 
-  private sendChangeData(status) {
+  protected sendChangeData(status) {
     this.onImageChange.emit({
       input: this.input,
       setUploadProcess: this.setUploadProcess,
@@ -145,7 +145,7 @@ export class ImageFormControlComponent implements OnDestroy, ControlValueAccesso
       fileReader.onload = (event) => {
         const target = event.target as any
         this.imageUrl = target.result
-        this.isImage = !!this.imageUrl.toString().startsWith('data:image/')
+        this.isImage = this.imageUrl.toString().startsWith('data:image/')
       }
       fileReader.readAsDataURL(value)
     } else {
@@ -218,9 +218,12 @@ export class ImageFormControlComponent implements OnDestroy, ControlValueAccesso
     return new Blob([ab], { type: this.orgFile.type });
   }
 
-  remove() {
+  remove(event) {
+    event.stopPropagation()
     if (this.myForm instanceof FormArray) {
       this.myForm.removeAt(parseInt(this.formControlName.toString()))
+    } else {
+      this.input.setValue(null)
     }
   }
 }

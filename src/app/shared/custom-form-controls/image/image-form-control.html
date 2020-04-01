@@ -10,7 +10,7 @@
       <div class="hover-item" (click)="$event.stopPropagation()">
         <em class="fa fa-crop" *ngIf="aspectRatio" (click)="openCropper($event)"></em>
         <em class="fa fa-eye" (click)="open($event)"></em>
-        <em class="fa fa-trash" *ngIf="isMultiple" (click)="remove($event)"></em>
+        <em class="fa fa-trash" (click)="remove($event)"></em>
         <em class="fa fa-file" (click)="openBrowser($event)"></em>
       </div>
     </div>

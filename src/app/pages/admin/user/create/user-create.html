@@ -1,3 +1,3 @@
-<user-frm-cmp btnLabel="Create" [userForm]="userForm" [onSubmit]="onSubmit">
-
-</user-frm-cmp>
+<form [formGroup]="form" (ngSubmit)="onSubmit(userForm)" #myform="ngForm">
+    <user-frm-cmp formControlName="user" [submitted]="myform.submitted"></user-frm-cmp>
+</form>
