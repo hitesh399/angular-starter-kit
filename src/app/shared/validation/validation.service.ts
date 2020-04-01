@@ -1,6 +1,6 @@
 import { Injector, Injectable } from '@angular/core';
 import { FileRulesContract, fileValidation } from './file.validate';
-import { FormControl, ValidationErrors, AsyncValidatorFn } from '@angular/forms';
+import { FormControl, ValidationErrors, AsyncValidatorFn, FormArray } from '@angular/forms';
 
 export interface ValidationServiceContract {
   getValidatorErrorMessage(validatorName: string, validatorValue?: any);
@@ -9,6 +9,7 @@ export interface ValidationServiceContract {
   emailValidator(control: FormControl): any;
   passwordValidator(control: FormControl): any;
   file(rules: FileRulesContract): AsyncValidatorFn
+  arrayMax(ma: number): any
 
 }
 
@@ -69,6 +70,11 @@ export class ValidationService implements ValidationServiceContract {
   file(rules: FileRulesContract): AsyncValidatorFn {
     return function (control: FormControl) {
       return fileValidation(control.value, rules)
+    }
+  }
+  arrayMax(max: number) {
+    return function (control: FormArray) {
+      return control.length > max ? { 'array.max': true } : null
     }
   }
 }

@@ -46,11 +46,7 @@ export class UserFormComponent implements OnInit, ControlValueAccessor, OnDestro
                     maxFileSize: 1
                 }))
             })]),
-            profile_images: new FormArray([new FormControl('', Validators.required, validationService.file({
-                acceptedFiles: 'image/*',
-                maxFileSize: 1,
-                crop: true
-            }))]),
+            profile_images: new FormArray([], validationService.arrayMax(4)),
             single_file: new FormControl('', Validators.required, validationService.file({
                 maxFileSize: 1
             }))
@@ -160,6 +156,7 @@ export class UserFormComponent implements OnInit, ControlValueAccessor, OnDestro
     validate(_: FormControl) {
 
         // console.log(this.userForm.valid, 'valid', this.userForm)
+        console.log('validate', this.userForm)
         return this.userForm.valid ? null : { user: { valid: false } };
     }
 }

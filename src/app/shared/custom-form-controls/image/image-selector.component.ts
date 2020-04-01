@@ -7,7 +7,7 @@ import { ValidationService } from '../../validation/validation.service';
 @Component({
     selector: 'image-selector',
     template: `
-        <div class="custom-file-selector">
+        <div class="custom-file-selector h-100">
         <input multiple type="file" accept="image/*" style="display:none" [id]="ID" (change)="onFileChange($event)" />
         <ng-template #defaultTpl>
         <span  (click)="openBrowser($event)">
