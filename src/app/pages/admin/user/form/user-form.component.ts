@@ -24,7 +24,10 @@ export class UserFormComponent implements OnInit {
         const addresses = this.userForm.get('addresses') as FormArray
         addresses.insert(index, new FormGroup({
             line1: new FormControl('', Validators.required),
-            line2: new FormControl('')
+            line2: new FormControl(''),
+            proof_file: new FormControl('', Validators.required, this.validationService.file({
+                maxFileSize: 1
+            }))
         }))
     }
     removeAddress(index) {

@@ -31,7 +31,10 @@ export class UserCreateComponent {
             last_name: ['', Validators.required],
             addresses: new FormArray([new FormGroup({
                 line1: new FormControl('', Validators.required),
-                line2: new FormControl('')
+                line2: new FormControl(''),
+                proof_file: new FormControl('', Validators.required, validationService.file({
+                    maxFileSize: 1
+                }))
             })]),
             profile_images: new FormArray([new FormControl('', Validators.required, validationService.file({
                 acceptedFiles: 'image/*',

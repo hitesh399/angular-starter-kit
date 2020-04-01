@@ -6,7 +6,7 @@
       (click)="openBrowser($event)">
       <em class="fa fa-image" *ngIf="!imageUrl;"></em>
       <img [src]="imageUrl" *ngIf="isImage && imageUrl" />
-      <p *ngIf="imageUrl && !isImage">Please Select a Image Only.</p>
+      <p *ngIf="imageUrl && !isImage">Please select only a Image.</p>
       <div class="hover-item" (click)="$event.stopPropagation()">
         <em class="fa fa-crop" *ngIf="aspectRatio" (click)="openCropper($event)"></em>
         <em class="fa fa-eye" (click)="open($event)"></em>

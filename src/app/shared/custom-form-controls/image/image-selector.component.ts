@@ -19,10 +19,13 @@ import { ValidationService } from '../../validation/validation.service';
 })
 
 export class ImageSelectorComponent implements OnInit {
+    
+    @Input() rules: Array<any>
 
     private myForm: FormArray;
-    @Input() rules: Array<any>
-    public ID: string = ('_' + Date.now()).toString()
+    
+    public ID: string = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    
     @ContentChild('default', { static: true }) template: TemplateRef<any>;
 
     constructor(private controlContainer: ControlContainer, private vs: ValidationService) { 

@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, forwardRef, TemplateRef, Output, EventEmitter } from "@angular/core";
+import { Component, Input, OnDestroy, forwardRef, TemplateRef, Output, EventEmitter, HostBinding } from "@angular/core";
 import { ControlContainer, FormGroup, FormControl, AbstractControl, FormArray, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ModalService } from '../../modal/modal.service';
@@ -43,10 +43,11 @@ export class ImageFormControlComponent implements OnDestroy, ControlValueAccesso
 
   @Output() onImageChange: EventEmitter<FileChnageEvent> = new EventEmitter<FileChnageEvent>()
 
-  public ID: string = ('_' + Date.now()).toString()
+  public ID: string = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
   private subscriptions: Subscription[] = []
 
+  @HostBinding('style.width') width: string = '100%';
   constructor(
     private controlContainer: ControlContainer,
     private modal: ModalService,
