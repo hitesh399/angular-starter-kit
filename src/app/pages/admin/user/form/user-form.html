@@ -1,4 +1,4 @@
-<form [formGroup]="userForm" (ngSubmit)="onSubmit(userForm.value)"  #myform="ngForm">
+<form [formGroup]="userForm" (ngSubmit)="onSubmit(userForm.value)" #myform="ngForm">
 
     <div class="form-group">
         <label for="email">Email:</label>
@@ -22,13 +22,31 @@
         </div>
     </div>
     <ng-container formArrayName="profile_images">
-        <image-selector [rules]="fileRules">Choose Image</image-selector>
-    <div class="row" *ngFor="let image of images.controls;  let i = index">
-        <div class="col-md-3 col-lg-3">
-            <image-form-control [aspectRatio]="4/3" [formControlName]="i"></image-form-control>
-            <v-message [control]="images.controls[i]" [submitted]="myform.submitted"></v-message>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 cok-xs-6 d-flex align-content-center flex-wrap justify-content-start">
+                         Gallery Images
+                    </div>
+                    <div class="col-md-6 col-sm-6 cok-xs-6 d-flex justify-content-end">
+                        <image-selector [rules]="fileRules">
+                            <ng-template #default let-openBrowser>
+                                <button class="btn btn-primary" (click)="openBrowser($event)" type="button">
+                                    <i class="fa fa-plus"></i> Choose Images
+                                </button>
+                            </ng-template>
+                        </image-selector>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-3 col-lg-3 col-sm-3 col-xs-12" *ngFor="let image of images.controls;  let i = index">
+                <image-form-control [aspectRatio]="4/3" [formControlName]="i" (onImageChange)="imageChange($event)">
+
+                </image-form-control>
+                <v-message [control]="images.controls[i]" [submitted]="myform.submitted"></v-message>
+            </div>
         </div>
-    </div>
     </ng-container>
 
     <h4>User Addresses: </h4>
@@ -40,7 +58,8 @@
                         <div class="form-group">
                             <label for="line1">Line 1:</label>
                             <input class="form-control " id="line1" type="text" formControlName="line1" />
-                            <v-message [control]="address.get('line1')" [submitted]="myform.submitted">Required</v-message>
+                            <v-message [control]="address.get('line1')" [submitted]="myform.submitted">Required
+                            </v-message>
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-6">

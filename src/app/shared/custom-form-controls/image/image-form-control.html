@@ -1,16 +1,25 @@
+<div class="image-item-container">
+  <input type="file" accept="image/*" style="display: none;" [id]="ID" (change)="onFileChange($event)">
 
-<div [ngClass]="{'image-control-wrapper':  true, 'd-flex': true, 'has-image': isFile}" (click)="openBrowser($event)">
-  <input type="file" [id]="ID" (change)="onFileChange($event)">
-  <em class="fa fa-image" *ngIf="!imageUrl;"></em>
-  <img [src]="imageUrl" *ngIf="isImage && imageUrl" />
-  <p *ngIf="imageUrl && !isImage">Please Select a Image Only.</p>
-  <div class="hover-item" (click)="$event.stopPropagation()">
-      <em class="fa fa-crop" *ngIf="aspectRatio" (click)="openCropper($event)"></em>
-      <em class="fa fa-eye" (click)="open($event)"></em>
-      <em class="fa fa-file" (click)="openBrowser($event)"></em>
-  </div>
-</div>
-<div *ngIf="isFile" class="image-name-wrapper">
-  <p >{{value.name}}</p>
-</div>
+  <ng-template #defaultImageTpl>
+    <div [ngClass]="{'image-control-wrapper':  true, 'd-flex': true, 'has-image': isFile}"
+      (click)="openBrowser($event)">
+      <em class="fa fa-image" *ngIf="!imageUrl;"></em>
+      <img [src]="imageUrl" *ngIf="isImage && imageUrl" />
+      <p *ngIf="imageUrl && !isImage">Please Select a Image Only.</p>
+      <div class="hover-item" (click)="$event.stopPropagation()">
+        <em class="fa fa-crop" *ngIf="aspectRatio" (click)="openCropper($event)"></em>
+        <em class="fa fa-eye" (click)="open($event)"></em>
+        <em class="fa fa-trash" *ngIf="isMultiple" (click)="remove($event)"></em>
+        <em class="fa fa-file" (click)="openBrowser($event)"></em>
+      </div>
+    </div>
+    <div *ngIf="isFile" class="image-name-wrapper">
+      <p>{{value.name}}</p>
+    </div>
+  </ng-template>
 
+  <ng-container *ngTemplateOutlet="imageTpl ? imageTpl: defaultImageTpl; context: {$implicit: ins}">
+
+  </ng-container>
+</div>

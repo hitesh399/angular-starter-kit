@@ -1,8 +1,16 @@
-import { Component, Input, OnDestroy, forwardRef } from "@angular/core";
+import { Component, Input, OnDestroy, forwardRef, TemplateRef, Output, EventEmitter } from "@angular/core";
 import { ControlContainer, FormGroup, FormControl, AbstractControl, FormArray, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ModalService } from '../../modal/modal.service';
 import { ImageControlCropperComponent } from './cropper/image-cropper.component';
+
+export interface FileChnageEvent {
+  status: string;
+  setUploadProcess(process: number): void;
+  changeBusyStatus(status: boolean): void;
+  input: AbstractControl
+}
+
 
 @Component({
   templateUrl: './image-form-control.html',
@@ -23,11 +31,17 @@ export class ImageFormControlComponent implements OnDestroy, ControlValueAccesso
   public isImage: boolean;
   public orgFile: File;
   public cropped: boolean = false
+  public busy: boolean = false;
+  public uploadProccess: number = 0;
+  onChange: any = () => { };
+  onTouched: any = () => { };
 
   @Input() formControlName: string | number
   @Input() minWidth: number = 150
   @Input() aspectRatio: number
-  @Input() busy: boolean = false;
+  @Input() imageTpl: TemplateRef<any>;
+
+  @Output() onImageChange: EventEmitter<FileChnageEvent> = new EventEmitter<FileChnageEvent>()
 
   public ID: string = ('_' + Date.now()).toString()
 
@@ -38,9 +52,17 @@ export class ImageFormControlComponent implements OnDestroy, ControlValueAccesso
     private modal: ModalService,
 
   ) {
+    this.changeBusyStatus = this.changeBusyStatus.bind(this)
+    this.setUploadProcess = this.setUploadProcess.bind(this)
   }
-  onChange: any = () => { };
-  onTouched: any = () => { };
+
+
+  changeBusyStatus(status: boolean): void {
+    this.busy = status
+  }
+  setUploadProcess(process: number): void {
+    this.uploadProccess = process
+  }
   writeValue(obj: any): void {
     this.setImageUrl(obj)
     if (obj) {
@@ -48,24 +70,30 @@ export class ImageFormControlComponent implements OnDestroy, ControlValueAccesso
     }
   }
   registerOnChange(fn: any): void {
-    console.log('Reg')
-    // throw new Error("Method not implemented.");
     this.onChange = fn;
-
-    console.log('I am chnaged', this.onChange)
   }
   registerOnTouched(fn: any): void {
-    // throw new Error("Method not implemented.");
     this.onTouched = fn;
   }
   setDisabledState?(isDisabled: boolean): void {
     // throw new Error("Method not implemented.");
   }
+
+  private sendChangeData(status) {
+    this.onImageChange.emit({
+      input: this.input,
+      setUploadProcess: this.setUploadProcess,
+      changeBusyStatus: this.changeBusyStatus,
+      status
+    })
+  }
   ngOnInit() {
 
-    // console.log('this.controlContainer.control', this.controlContainer.control)
     this.myForm = <FormGroup | FormArray>this.controlContainer.control;
     this.orgFile = this.input.value
+    if (this.orgFile) {
+      this.sendChangeData('org')
+    }
 
     this.subscriptions.push(
       this.input.statusChanges.subscribe(status => {
@@ -91,16 +119,20 @@ export class ImageFormControlComponent implements OnDestroy, ControlValueAccesso
   get input(): AbstractControl {
     return this.myForm instanceof FormArray ? this.myForm.controls[this.formControlName] : this.myForm.get(this.formControlName.toString())
   }
+  get ins() {
+    return this
+  }
   get value() {
     return this.input.value
   }
+  get isMultiple() {
+    return this.myForm instanceof FormArray
+  }
   onFileChange(event): void {
-    // console.log('sds', event)
-    //
     this.orgFile = event.target.files[0]
     this.input.patchValue(this.orgFile)
-
     event.target.value = null
+    this.sendChangeData('org');
   }
   openBrowser(event): void {
     event.target.closest('form').querySelector('[type="file"][id="' + this.ID + '"]').click()
@@ -154,6 +186,8 @@ export class ImageFormControlComponent implements OnDestroy, ControlValueAccesso
 
       this.input.setValue(newFile)
       this.setImageUrl(newFile)
+
+      this.sendChangeData('cropped')
       close()
 
     }).catch(() => {
@@ -181,5 +215,11 @@ export class ImageFormControlComponent implements OnDestroy, ControlValueAccesso
       ia[i] = byteString.charCodeAt(i);
     }
     return new Blob([ab], { type: this.orgFile.type });
+  }
+
+  remove() {
+    if (this.myForm instanceof FormArray) {
+      this.myForm.removeAt(parseInt(this.formControlName.toString()))
+    }
   }
 }

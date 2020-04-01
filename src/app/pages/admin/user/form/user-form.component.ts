@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 
 import { FormActAs } from 'src/app/contracts/common.contract';
 import { ValidationService } from 'src/app/shared/validation/validation.service';
+import { FileChnageEvent } from 'src/app/shared/custom-form-controls/image/image-form-control.component';
 
 @Component({
     templateUrl: './user-form.html',
@@ -32,6 +33,10 @@ export class UserFormComponent implements OnInit {
     }
     get addresses(): FormArray {
         return this.userForm.get('addresses') as FormArray
+    }
+
+    imageChange(e: FileChnageEvent) {
+        console.log('Image Change', e)
     }
 
     get fileRules() {

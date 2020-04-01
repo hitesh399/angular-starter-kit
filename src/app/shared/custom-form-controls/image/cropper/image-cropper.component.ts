@@ -1,16 +1,19 @@
-import { Component, Input, OnInit, OnChanges } from "@angular/core";
-import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { Component, Input, OnInit, OnChanges, ViewChild } from "@angular/core";
+import { ImageCroppedEvent, ImageCropperComponent } from 'ngx-image-cropper';
 
 @Component({
     templateUrl: './image-cropper.html',
     styleUrls: ['./image-cropper.scss']
 })
-export class ImageControlCropperComponent {
+export class ImageControlCropperComponent implements OnInit {
 
     @Input() file: File
     @Input() aspectRatio: number
 
-    modal: Object
+
+    @ViewChild(ImageCropperComponent, { static: true }) imageCropper: ImageCropperComponent
+
+    public modal: Object
 
     public transform = {
         scale: 1,
@@ -20,6 +23,8 @@ export class ImageControlCropperComponent {
     }
     public output: ImageCroppedEvent;
     public canvasRotation: number = 0
+    public format: string
+
 
     cropped(value: ImageCroppedEvent) {
         this.output = value
@@ -35,5 +40,9 @@ export class ImageControlCropperComponent {
             this.canvasRotation = 0
         }
         this.canvasRotation = this.canvasRotation + 45
+    }
+    ngOnInit() {
+        const type = this.file.type.split('/')
+        this.format = type[1] ? type[1] : type[0]
     }
 }
