@@ -75,7 +75,6 @@ export class UserFormComponent implements OnInit, ControlValueAccessor, OnDestro
     }
 
     set value(value) {
-        // console.log('value', value, this.userForm)
         this.userForm.patchValue(value);
         this.onChange(value);
         this.onTouched();
@@ -111,7 +110,7 @@ export class UserFormComponent implements OnInit, ControlValueAccessor, OnDestro
 
     addAddress(index) {
         const addresses = this.userForm.get('addresses') as FormArray
-        addresses.insert(index, new FormGroup({
+        addresses.insert((index+1), new FormGroup({
             line1: new FormControl('', Validators.required),
             line2: new FormControl(''),
             proof_file: new FormControl('', Validators.required, this.validationService.file({

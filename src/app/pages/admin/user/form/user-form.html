@@ -79,7 +79,8 @@
                             Other Proofs (Only 6 files are allow)
                             <file-selector [rules]="otherProofRules" class="d-inline-block">
                                 <ng-template #default let-openBrowser>
-                                    <button type="button" class="btn btn-primary btn-link" (click)="openBrowser($event)">
+                                    <button type="button" class="btn btn-primary btn-link"
+                                        (click)="openBrowser($event)">
                                         <em class="fa fa-plus"></em>
                                     </button>
                                 </ng-template>
@@ -115,9 +116,10 @@
             <div class="col-md-10 col-sm-10">
                 <div class="row">
                     <div class="col-md-3 col-sm-3 ">
-                        <div class="form-group w-100 h-100 d-flex"
-                            style="align-items: center; justify-content: center;">
-                            <image-form-control formControlName="proof_file"></image-form-control>
+                        <div class="form-group h-100">
+                            <div class="d-flex justify-content-center align-items-center h-100">
+                                <image-form-control class="d-inline-block" formControlName="proof_file"></image-form-control>
+                            </div>
                             <v-message [control]="address.get('proof_file')" [submitted]="submitted">Required
                             </v-message>
                         </div>
