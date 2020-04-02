@@ -22,9 +22,8 @@
     </div>
     <ng-container formArrayName="profile_images">
         <div class="row">
-            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
-                Gallery Images (Max 4 Images)
-
+            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 pb-2">
+                <label>Images <span>(Only 10 images are allow)</span></label>
             </div>
             <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
                 <div class="d-flex flex-wrap">
@@ -35,7 +34,7 @@
                         </image-form-control>
                         <v-message [control]="images.controls[i]" [submitted]="submitted"></v-message>
                     </div>
-                    <image-selector *ngIf="images.length < 4" [rules]="fileRules">
+                    <image-selector *ngIf="images.length < 10" [rules]="imageRules">
                         <ng-template #default let-openBrowser>
                             <div (click)="openBrowser($event)"
                                 style="width: 100px; cursor: pointer; min-height: 100px; border: 1px dotted #cccccc;"
@@ -51,15 +50,64 @@
 
         </div>
     </ng-container>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="form-group">
-                <label for="certifcate_file">Certifcate File:</label>
-                <file-form-control formControlName="single_file"></file-form-control>
-                <v-message [control]="userForm.get('single_file')" [submitted]="submitted"></v-message>
+    <div class="row pt-2">
+        <ng-container [formGroup]="userForm.controls.aadhard_card">
+            <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                    <label for="certifcate_file">Aadhar Card Front:</label>
+                    <file-form-control formControlName="front"></file-form-control>
+                    <v-message [control]="userForm.controls.aadhard_card.get('front')" [submitted]="submitted">
+                    </v-message>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                    <label for="certifcate_file">Aadhar Card Back:</label>
+                    <file-form-control formControlName="back"></file-form-control>
+                    <v-message [control]="userForm.controls.aadhard_card.get('back')" [submitted]="submitted">
+                    </v-message>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <ng-container formArrayName="other_proofs">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="row  align-items-center">
+                        <div class="col-md-6 col-sm-12">
+                            Other Proofs (Only 6 files are allow)
+                            <file-selector [rules]="otherProofRules" class="d-inline-block">
+                                <ng-template #default let-openBrowser>
+                                    <button type="button" class="btn btn-primary btn-link" (click)="openBrowser($event)">
+                                        <em class="fa fa-plus"></em>
+                                    </button>
+                                </ng-template>
+                            </file-selector>
+                        </div>
+                    </div>
+                    <v-message [control]="otherProofs" [submitted]="submitted"></v-message>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6"
+                            *ngFor="let otherProof of otherProofs.controls;  let proofIndex = index">
+                            <div class="form-group">
+                                <file-form-control [aspectRatio]="1/1" [formControlName]="proofIndex"
+                                    (onImageChange)="imageChange($event)">
+                                </file-form-control>
+                                <v-message [control]="otherProof" [submitted]="submitted"></v-message>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
-    </div>
+    </ng-container>
 
     <h4>User Addresses: </h4>
     <div class="row" *ngFor="let address of addresses.controls;  let i = index">

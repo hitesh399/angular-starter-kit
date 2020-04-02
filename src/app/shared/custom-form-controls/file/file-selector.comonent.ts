@@ -11,7 +11,7 @@ import { ImageSelectorComponent } from '../image/image-selector.component';
     </ng-template>
     <ng-container *ngTemplateOutlet="template ? template: defaultTpl; context: {$implicit: openBrowser}"></ng-container>
     </div>`,
-    selector: 'file-selector-cmp'
+    selector: 'file-selector'
 })
 export class FileSelectorComponent extends ImageSelectorComponent {
     @Input() accept: string = ''

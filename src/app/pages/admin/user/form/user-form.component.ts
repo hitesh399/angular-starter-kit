@@ -46,10 +46,16 @@ export class UserFormComponent implements OnInit, ControlValueAccessor, OnDestro
                     maxFileSize: 1
                 }))
             })]),
-            profile_images: new FormArray([], validationService.arrayMax(4)),
-            single_file: new FormControl('', Validators.required, validationService.file({
-                maxFileSize: 1
-            }))
+            profile_images: new FormArray([], validationService.arrayMax(10)),
+            aadhard_card: new FormGroup({
+                front: new FormControl('', Validators.required, validationService.file({
+                    maxFileSize: 1
+                })),
+                back: new FormControl('', Validators.required, validationService.file({
+                    maxFileSize: 1
+                }))
+            }),
+            other_proofs: new FormArray([], [Validators.required, validationService.arrayMax(6)])
         })
 
         this.subscriptions.push(
@@ -125,15 +131,23 @@ export class UserFormComponent implements OnInit, ControlValueAccessor, OnDestro
         console.log('Image Change', e)
     }
 
-    get fileRules() {
+    get imageRules() {
         return [Validators.required, this.validationService.file({
             acceptedFiles: 'image/*',
             maxFileSize: 1,
             crop: true
         })]
     }
+    get otherProofRules() {
+        return [Validators.required, this.validationService.file({
+            maxFileSize: 1,
+        })]
+    }
     get images(): FormArray {
         return this.userForm.get('profile_images') as FormArray
+    }
+    get otherProofs(): FormArray {
+        return this.userForm.get('other_proofs') as FormArray
     }
     setErrors() {
         let errors = {
@@ -144,8 +158,6 @@ export class UserFormComponent implements OnInit, ControlValueAccessor, OnDestro
         }
 
         const fieldNames = Object.keys(errors)
-
-        console.log('sdsd', this.userForm)
         fieldNames.map(name => {
             const field = this.userForm.get(name) as FormControl
             if (field) {
@@ -154,9 +166,6 @@ export class UserFormComponent implements OnInit, ControlValueAccessor, OnDestro
         })
     }
     validate(_: FormControl) {
-
-        // console.log(this.userForm.valid, 'valid', this.userForm)
-        console.log('validate', this.userForm)
         return this.userForm.valid ? null : { user: { valid: false } };
     }
 }
