@@ -1,7 +1,7 @@
 <div class="modal-container dynamic-modal" (click)="clickOutOfModalBox($event)">
     <div class="modal-backdrop"></div>
     <div class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document" (click)="clickModalBox($event)">
+        <div class="modal-dialog modal-dialog-centered {{modalClass}}" role="document" (click)="clickModalBox($event)">
             <div class="modal-content">
                 <div class="modal-header" *ngIf="title">
                     <h5 class="modal-title">{{title}}</h5>

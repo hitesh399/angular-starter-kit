@@ -10,7 +10,7 @@
             <th scope="col">Image</th>
             <th scope="col">Name</th>
             <th scope="col">Email</th>
-            <th scope="col" width="60" align="right">Action</th>
+            <th scope="col" style="text-align: right;" width="200">Action</th>
         </tr>
     </thead>
     <tbody>
@@ -32,6 +32,8 @@
             <td>{{ user.email }}</td>
             <td>
                 <div class="d-flex justify-content-between">
+                    <button (click)="openEditPopup($event, user)" class="btn btn-primary btn-link">Edit On
+                        Popup</button>
                     <a [routerLink]="['/admin/user', user.id,'edit']"><i class="fa fa-pen"></i></a>
                     <a href="javascript:void(0)" (click)="deletePopup()"><i class="fa fa-trash"></i></a>
                 </div>

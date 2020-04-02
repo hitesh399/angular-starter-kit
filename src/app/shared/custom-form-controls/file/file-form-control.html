@@ -17,8 +17,8 @@
 <div class="file-container">
     <input type="file" style="display: none;" [id]="ID" (change)="onFileChange($event)">
 
-    <div class="card" style="border-radius: 0;" >
-        <div class="card-body p-2">
+    <div class="card" >
+        <div class="card-body">
             <div class="d-flex ">
                 <div class="w-100 d-flex align-content-center flex-wrap">
                     <div class="d-flex">
@@ -37,7 +37,7 @@
                 </div>
                 <div class="pl-2 flex-shrink-1 d-flex align-content-center flex-wrap">
 
-                    <button class="btn btn-primary choose-btn" (click)="openBrowser($event)" type="button">Browse</button>
+                    <button class="btn btn-primary btn-sm choose-btn" (click)="openBrowser($event)" type="button">Browse</button>
                 </div>
             </div>
         </div>

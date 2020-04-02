@@ -1,11 +1,12 @@
 export interface ModalContract {
-    title?: String,
-    componentInputs?: Object,
-    showCancelBtn?: Boolean,
-    cancelBtnLabel?: String,
-    showOKBtn?: Boolean,
-    okBtnLabel?: String,
-    showFooter?: Boolean,
-    insideModalBody?: Boolean,
-    persistent?: Boolean
+    title?: string,
+    componentInputs?: object,
+    showCancelBtn?: boolean,
+    cancelBtnLabel?: string,
+    showOKBtn?: boolean,
+    okBtnLabel?: string,
+    showFooter?: boolean,
+    insideModalBody?: boolean,
+    persistent?: boolean
+    modalClass?: string
 }

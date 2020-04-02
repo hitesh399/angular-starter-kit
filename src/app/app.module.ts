@@ -8,11 +8,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { ModalService } from './shared/modal/modal.service';
 import { ModalComponent } from './shared/modal/modal.component';
 import { SideBarMenu } from './shared/sidebar/menus/menu'; 
+import { UserPopupComponent } from './pages/admin/user/user-popup.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ModalComponent,
+    UserPopupComponent
   ],
   imports: [
     BrowserModule,
@@ -23,6 +25,6 @@ import { SideBarMenu } from './shared/sidebar/menus/menu';
   ],
   providers: [ModalService, SideBarMenu],
   bootstrap: [AppComponent],
-  entryComponents: [ModalComponent]
+  entryComponents: [ModalComponent, UserPopupComponent]
 })
 export class AppModule { }

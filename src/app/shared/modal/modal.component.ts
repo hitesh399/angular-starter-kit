@@ -16,10 +16,12 @@ export class ModalComponent implements OnInit {
     modal: any;
     insideModalBody: Boolean = true
     persistent: Boolean = false
+    modalClass: string
 
     constructor() { }
 
     ngOnInit() {
+        console.log('show Footer', this.showFooter)
     }
 
     close() {

@@ -4,6 +4,8 @@ import { ListContract } from 'src/app/contracts/list.contract';
 import helper from 'js-object-helper'
 import { ModalService } from 'src/app/shared/modal/modal.service';
 import { ToastService } from 'src/app/shared/toast/toast-service';
+import { FromEventTarget } from 'rxjs/internal/observable/fromEvent';
+import { UserPopupComponent } from './user-popup.component';
 
 @Component({
     templateUrl: './user-list.html',
@@ -44,6 +46,21 @@ export class UserListComponent implements OnInit {
             }).catch(() => {
                 console.log('Cancel...')
             })
+    }
+    openEditPopup(event: Event, user) {
+        event.preventDefault()
+        // console.log('Test ', user)
+        this.modal.open(UserPopupComponent, {
+            showFooter: false,
+            title: 'Edit User Information',
+            modalClass: 'modal-lq',
+            componentInputs: {
+                userdata: user,
+                btnLabel: 'Update'
+            }
+        }).then(() => {
+            this.toast.success('User has been updated.')
+        }).catch(() => { })
     }
     fetchList() {
         this.requesting = true

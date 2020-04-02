@@ -35,10 +35,9 @@ export class ModalService {
             const ngContent = this.resolveNgContent(content);
             this.componentRef = factory.create(this.injector, ngContent);
 
-
             (<ModalComponent>this.componentRef.instance).modal = this
 
-            const { title, insideModalBody, persistent, showCancelBtn, cancelBtnLabel, showOKBtn, okBtnLabel, showFooter } = this.options
+            const { title, modalClass, insideModalBody, persistent, showCancelBtn, cancelBtnLabel, showOKBtn, okBtnLabel, showFooter } = this.options
             if (title)
                 (<ModalComponent>this.componentRef.instance).title = title;
 
@@ -57,7 +56,10 @@ export class ModalService {
             if (okBtnLabel)
                 (<ModalComponent>this.componentRef.instance).okBtnLabel = okBtnLabel;
 
-            if (showFooter)
+            if (modalClass)
+                (<ModalComponent>this.componentRef.instance).modalClass = modalClass;
+
+            if (showFooter !== undefined)
                 (<ModalComponent>this.componentRef.instance).showFooter = showFooter;
 
             if (insideModalBody !== undefined)

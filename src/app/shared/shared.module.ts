@@ -11,8 +11,12 @@ import { SidebarModule } from './sidebar/sidebar.module';
 import { ValidationModule } from './validation/validation.module';
 import { ImageFormControlModule } from './custom-form-controls/image/image-form-control.module';
 import { FileFormControlModule } from './custom-form-controls/file/file-form-control.module';
+import { UserFormComponent } from '../pages/admin/user/form/user-form.component';
 
 @NgModule({
+    declarations: [
+        UserFormComponent
+    ],
     imports: [
         /** Start Node Modules */
         FormsModule,
@@ -47,7 +51,8 @@ import { FileFormControlModule } from './custom-form-controls/file/file-form-con
         SidebarModule,
         ValidationModule,
         ImageFormControlModule,
-        FileFormControlModule
+        FileFormControlModule,
+        UserFormComponent
     ]
 })
 
