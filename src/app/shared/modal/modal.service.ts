@@ -9,6 +9,20 @@ let numberOfOpenModal = 0
 
 @Injectable()
 export class ModalService {
+    constructor(private resolver: ComponentFactoryResolver,
+        private injector: Injector,
+        @Inject(DOCUMENT) private document: Document,
+        private appRef: ApplicationRef
+    ) {
+
+    }
+    open<T>(content: Content<T>, options: ModalContract = {}) {
+        const modal = new ModalSingleService(this.resolver, this.injector, this.document, this.appRef)
+        return modal.open(content, options)
+    }
+}
+
+class ModalSingleService {
     componentRef: any;
     options: ModalContract;
     callBack: Function;
