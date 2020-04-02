@@ -26,7 +26,10 @@ export class ValidationService implements ValidationServiceContract {
       email: 'Invalid email address',
       invalidPassword:
         'Invalid password. Password must be at least 6 characters long, and contain a number.',
-      minlength: `Minimum length ${validatorValue.requiredLength}`
+      minlength: `Minimum length ${validatorValue.requiredLength}`,
+      'file.crop': 'Image must be crroped.',
+      'file.maxFileSize': 'File size is too large.',
+      'array.max': 'You exceed the max number.'
     };
 
     return config[validatorName];

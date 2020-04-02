@@ -95,6 +95,7 @@ export class ImageFormControlComponent implements OnInit, OnDestroy, ControlValu
     if (this.orgFile) {
       this.sendChangeData('org')
     }
+    
 
     this.subscriptions.push(
       this.input.statusChanges.subscribe(status => {
@@ -154,7 +155,7 @@ export class ImageFormControlComponent implements OnInit, OnDestroy, ControlValu
   }
 
   openCropper() {
-    if (!this.isFile) return
+    if (!this.isFile || !this.aspectRatio) return
 
     this.modal.open(ImageControlCropperComponent, {
       insideModalBody: false,

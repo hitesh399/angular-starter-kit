@@ -45,7 +45,7 @@ export class UserFormComponent implements OnInit, ControlValueAccessor, OnDestro
                 proof_file: new FormControl('', Validators.required, validationService.file({
                     maxFileSize: 1
                 }))
-            })]),
+            })], validationService.arrayMax(3) ),
             profile_images: new FormArray([], validationService.arrayMax(10)),
             aadhard_card: new FormGroup({
                 front: new FormControl('', Validators.required, validationService.file({

@@ -97,31 +97,39 @@
                         <div class="col-md-6 col-sm-6"
                             *ngFor="let otherProof of otherProofs.controls;  let proofIndex = index">
                             <div class="form-group">
-                                <file-form-control [aspectRatio]="1/1" [formControlName]="proofIndex"
-                                    (onImageChange)="imageChange($event)">
+                                <file-form-control [formControlName]="proofIndex" (onImageChange)="imageChange($event)">
                                 </file-form-control>
                                 <v-message [control]="otherProof" [submitted]="submitted"></v-message>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </ng-container>
 
-    <h4>User Addresses: </h4>
+    <div class="row m-b-4">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>Addressess (Only 3 addresses are allow)</label>
+                <v-message [control]="addresses" [submitted]="submitted"></v-message>
+            </div>
+        </div>
+    </div>
     <div class="row" *ngFor="let address of addresses.controls;  let i = index">
         <ng-container [formGroup]="address">
             <div class="col-md-10 col-sm-10">
                 <div class="row">
                     <div class="col-md-3 col-sm-3 ">
-                        <div class="form-group h-100">
-                            <div class="d-flex justify-content-center align-items-center h-100">
-                                <image-form-control class="d-inline-block" formControlName="proof_file"></image-form-control>
+                        <div class="d-flex justify-content-center align-items-center h-100">
+                            <div class="form-group h-100">
+
+                                <image-form-control class="d-inline-block" formControlName="proof_file">
+                                </image-form-control>
+                                <v-message [control]="address.get('proof_file')" [submitted]="submitted">Required
+                                </v-message>
                             </div>
-                            <v-message [control]="address.get('proof_file')" [submitted]="submitted">Required
-                            </v-message>
+
                         </div>
                     </div>
                     <div class="col-md-9 col-sm-9">
@@ -147,11 +155,13 @@
         </ng-container>
     </div>
     <div class="row ">
-        <div class="col-md-6">
+        <div class="col-md-6 col-sm-6 col-xs-6 col-4">
             <submit-btn>{{btnLabel}}</submit-btn>
         </div>
-        <div class="col-md-6 d-flex justify-content-end">
-            <button class="btn btn-danger" (click)="setErrors()" type="button">Set Custom Errors</button>
+        <div class="col-md-6 col-sm-6 col-xs-6 col-8">
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-danger" (click)="setErrors()" type="button">Set Custom Errors</button>
+            </div>
         </div>
     </div>
 
