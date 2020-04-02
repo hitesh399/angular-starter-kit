@@ -24,6 +24,8 @@ export class ImageControlCropperComponent implements OnInit {
     public output: ImageCroppedEvent;
     public canvasRotation: number = 0
     public format: string
+    public loaded: boolean = false
+    public cropperPosition = { x1: 0, y1: 0, x2: 50, y2: 50 }
 
 
     cropped(value: ImageCroppedEvent) {
@@ -35,6 +37,9 @@ export class ImageControlCropperComponent implements OnInit {
         }
         this.canvasRotation = this.canvasRotation - 45
     }
+    cropperReady() {
+        this.loaded = true
+    }
     moveLeft() {
         if (this.canvasRotation === 180) {
             this.canvasRotation = 0
@@ -44,5 +49,16 @@ export class ImageControlCropperComponent implements OnInit {
     ngOnInit() {
         const type = this.file.type.split('/')
         this.format = type[1] ? type[1] : type[0]
+    }
+    setZoom(event) {
+        // console.log('event', event)
+        const zoom = parseInt(event.target.value)
+        this.transform = { ...this.transform, scale: zoom }
+    }
+    flipH() {
+        this.transform = { ...this.transform, flipH: !this.transform.flipH }
+    }
+    flipV(){
+        this.transform = { ...this.transform, flipV: !this.transform.flipV }
     }
 }

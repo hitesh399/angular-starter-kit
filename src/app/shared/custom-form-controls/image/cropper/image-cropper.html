@@ -1,12 +1,18 @@
 <div class="modal-body">
+    <div style="text-align: center;" *ngIf="!loaded">
+        <div class="spinner-border spinner-border-sm" role="status">
+            <span class="sr-only">Loading...</span>
+        </div> Loading...
+    </div>
     <div class="image-cropper-wrapper">
-        <image-cropper [imageFile]="file" (imageCropped)="cropped($event)" [transform]="transform"
-            [aspectRatio]="aspectRatio" [format]="format" [hideResizeSquares]="true" [canvasRotation]="canvasRotation">
+        <image-cropper [imageFile]="file" [cropper]="cropperPosition"  (cropperReady)="cropperReady()" (imageCropped)="cropped($event)"
+            [transform]="transform" [aspectRatio]="aspectRatio" [format]="format" [hideResizeSquares]="true"
+            [canvasRotation]="canvasRotation">
         </image-cropper>
     </div>
 </div>
 <div class="modal-footer">
-    <div class="d-flex bd-highlight w-100">
+    <div class="d-flex bd-highlight w-100 align-items-center">
         <button class="btn btn-danger mr-auto bd-highlight" (click)="modal.reject()">
             Cancel
         </button>
@@ -16,8 +22,21 @@
         <button type="button" class="btn btn-info  bd-highlight" (click)="moveLeft($event)">
             <em class="fa fa-undo-alt transform-flip"></em>
         </button>
+        <button type="button" class="btn btn-info  bd-highlight" (click)="flipH($event)">
+            Flip H
+        </button>
+        <button type="button" class="btn btn-info  bd-highlight" (click)="flipV($event)">
+            Flip V
+        </button>
         <button class="btn btn-primary  bd-highlight" (click)="modal.done()">
             Crop
         </button>
-      </div>
+        <!-- <select style="width: 100px;" class="form-control form-control-sm" (change)="setZoom($event)">
+            <option value="1">1 Normal</option>
+            <option value="2">2x Zoom</option>
+            <option value="3">3x Zoom</option>
+            <option value="4">4x Zoom</option>
+            <option value="5">5x Zoom</option>
+        </select> -->
+    </div>
 </div>
