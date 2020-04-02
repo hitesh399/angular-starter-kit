@@ -5,6 +5,8 @@ import { ModalContract } from './modal.contract';
 
 export type Content<T> = string | TemplateRef<T> | Type<T>;
 
+let numberOfOpenModal = 0
+
 @Injectable()
 export class ModalService {
     componentRef: any;
@@ -26,7 +28,7 @@ export class ModalService {
     }
 
     open<T>(content: Content<T>, options: ModalContract = {}) {
-
+        numberOfOpenModal++
         return new Promise((resolve, reject) => {
             this.resloveFnc = resolve
             this.rejectFnc = reject
@@ -68,25 +70,53 @@ export class ModalService {
             this.appRef.attachView(this.componentRef.hostView)
 
             const domElem = (this.componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
+            // console.log('domElem', domElem, numberOfOpenModal)
             this.document.body.appendChild(domElem);
 
             this.componentRef.hostView.detectChanges();
             // this.componentRef
             this.document.body.classList.add('modal-open')
+
+            if (numberOfOpenModal > 1) {
+                let backdropIndex = 1040 + 10 + numberOfOpenModal
+                let modalIndex = backdropIndex + 10;
+                let backdropElm = domElem.querySelector('.modal-backdrop') as HTMLDivElement;
+                let backElm = domElem.querySelector('.modal') as HTMLDivElement;
+                // domElem.querySelector('.modal')
+                if (backdropElm) {
+                    backdropElm.style.zIndex = backdropIndex.toString()
+                }
+                if (backElm) {
+                    backElm.style.zIndex = modalIndex.toString()
+                }
+            }
         })
 
     }
     close(data: any) {
         this.appRef.detachView(this.componentRef.hostView);
+        if (this.childcComponentRef) {
+            this.appRef.detachView(this.childcComponentRef.hostView)
+        }
         this.componentRef.destroy();
-        this.document.body.classList.remove('modal-open')
+        this.removeCallFromBody()
         this.resloveFnc(data)
     }
     reject(data: any): void {
         this.appRef.detachView(this.componentRef.hostView);
+        if (this.childcComponentRef) {
+            this.appRef.detachView(this.childcComponentRef.hostView)
+        }
         this.componentRef.destroy();
-        this.document.body.classList.remove('modal-open')
+        this.removeCallFromBody()
         this.rejectFnc(data)
+    }
+    removeCallFromBody() {
+        const dyamicModal = this.document.getElementsByClassName('.dynamic-modal')
+        if (dyamicModal.length === 1) {
+            this.document.body.classList.remove('modal-open')
+        }
+        numberOfOpenModal--
     }
     disable() {
         (<ModalComponent>this.componentRef.instance).disabled = true
