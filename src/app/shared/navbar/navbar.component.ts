@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 // import { ROUTES } from '../sidebar/sidebar.component';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
@@ -10,7 +10,8 @@ import { SideBarMenu } from '../sidebar/menus/menu';
   templateUrl: 'navbar.html'
 })
 
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
+
   private listTitles: any[];
   location: Location;
   private nativeElement: Node;
@@ -30,6 +31,8 @@ export class NavbarComponent implements OnInit {
   ) {
     this.location = location;
     this.nativeElement = element.nativeElement;
+    this.outerClick = this.outerClick.bind(this)
+    this.sidebarClose = this.sidebarClose.bind(this)
   }
 
   ngOnInit() {
@@ -37,6 +40,22 @@ export class NavbarComponent implements OnInit {
     var navbar: HTMLElement = this.element.nativeElement;
     this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
 
+    const mainPanel = <HTMLElement>document.querySelector('.main-panel .content')
+    mainPanel.addEventListener('click', this.outerClick)
+    window.addEventListener('resize', this.sidebarClose)
+
+  }
+  ngOnDestroy() {
+    const mainPanel = <HTMLElement>document.querySelector('.main-panel .content')
+    mainPanel.removeEventListener('click', this.outerClick)
+    window.removeEventListener('resize', this.sidebarClose)
+  }
+  outerClick() {
+    const html = document.getElementsByTagName('html')[0];
+    const isNavOpen = html.classList.contains('nav-open')
+    if(isNavOpen) {
+       this.sidebarClose()
+    }
   }
   getTitle() {
     var titlee = this.location.prepareExternalUrl(this.location.path());
