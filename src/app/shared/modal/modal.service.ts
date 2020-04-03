@@ -113,7 +113,7 @@ class ModalSingleService {
             this.appRef.detachView(this.childcComponentRef.hostView)
         }
         this.componentRef.destroy();
-        this.removeCallFromBody()
+        this.removeclassFromBody()
         this.resloveFnc(data)
     }
     reject(data: any): void {
@@ -122,12 +122,12 @@ class ModalSingleService {
             this.appRef.detachView(this.childcComponentRef.hostView)
         }
         this.componentRef.destroy();
-        this.removeCallFromBody()
+        this.removeclassFromBody()
         this.rejectFnc(data)
     }
-    removeCallFromBody() {
+    removeclassFromBody() {
         const dyamicModal = this.document.getElementsByClassName('.dynamic-modal')
-        if (dyamicModal.length === 1) {
+        if (numberOfOpenModal === 1) {
             this.document.body.classList.remove('modal-open')
         }
         numberOfOpenModal--
