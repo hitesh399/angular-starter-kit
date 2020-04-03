@@ -7,8 +7,17 @@ import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ModalService } from './shared/modal/modal.service';
 import { ModalComponent } from './shared/modal/modal.component';
-import { SideBarMenu } from './shared/sidebar/menus/menu'; 
+import { SideBarMenu } from './shared/sidebar/menus/menu';
 import { UserPopupComponent } from './pages/admin/user/user-popup.component';
+import * as Hammer from 'hammerjs';
+import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+
+
+export class MyHammerConfig extends HammerGestureConfig {
+  overrides = <any>{
+    swipe: { direction: Hammer.DIRECTION_ALL },
+  };
+}
 
 @NgModule({
   declarations: [
@@ -23,7 +32,14 @@ import { UserPopupComponent } from './pages/admin/user/user-popup.component';
     SharedModule,
 
   ],
-  providers: [ModalService, SideBarMenu],
+  providers: [
+    ModalService,
+    SideBarMenu,
+    {
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: MyHammerConfig,
+    }
+  ],
   bootstrap: [AppComponent],
   entryComponents: [ModalComponent, UserPopupComponent]
 })
