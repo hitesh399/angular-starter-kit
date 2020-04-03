@@ -95,7 +95,7 @@ export class ImageFormControlComponent implements OnInit, OnDestroy, ControlValu
     if (this.orgFile) {
       this.sendChangeData('org')
     }
-    
+
 
     this.subscriptions.push(
       this.input.statusChanges.subscribe(status => {
@@ -194,8 +194,7 @@ export class ImageFormControlComponent implements OnInit, OnDestroy, ControlValu
 
     }).catch(() => {
       if (this.isFile && this.isImage && !this.value.cropped) {
-        this.input.setValue(null)
-        this.orgFile = null
+        this.clearValue()
       }
     })
   }
@@ -221,10 +220,14 @@ export class ImageFormControlComponent implements OnInit, OnDestroy, ControlValu
 
   remove(event) {
     event.stopPropagation()
+    this.clearValue()
+  }
+  clearValue() {
     if (this.myForm instanceof FormArray) {
       this.myForm.removeAt(parseInt(this.formControlName.toString()))
     } else {
       this.input.setValue(null)
     }
+    this.orgFile = null
   }
 }
