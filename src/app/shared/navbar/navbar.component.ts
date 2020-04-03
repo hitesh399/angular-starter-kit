@@ -51,13 +51,17 @@ export class NavbarComponent implements OnInit {
     return 'Dashboard';
   }
   sidebarToggle() {
-    if (this.sidebarVisible === false) {
+    const html = document.getElementsByTagName('html')[0];
+    const isNavOpen = html.classList.contains('nav-open')
+
+    if (this.sidebarVisible === false || !isNavOpen) {
       this.sidebarOpen();
     } else {
       this.sidebarClose();
     }
   }
   sidebarOpen() {
+
     const toggleButton = this.toggleButton;
     const html = document.getElementsByTagName('html')[0];
     const mainPanel = <HTMLElement>document.getElementsByClassName('main-panel')[0];

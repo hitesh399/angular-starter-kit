@@ -1,0 +1,24 @@
+<ng-template #mainMenuLink let-item>
+    <a [routerLink]="[item.path]" class="nav-link text-truncate d-flex align-items-center" routerLinkActive="active">
+        <i *ngIf="item.icon" class="fa {{item.icon}}"></i>
+        <span>{{item.title}}</span>
+    </a>
+</ng-template>
+<ng-template #subMainMenuLink let-item>
+    <a href="javascript:void(0);" class="nav-link text-truncate d-flex align-items-center" (click)="toggle($event)"
+        [attr.aria-expanded]="!isCollapsed" attr.aria-controls="submenu{{item._id}}">
+        <i *ngIf="item.icon" class="fa {{item.icon}}"></i>
+        <span>{{item.title}}</span>&nbsp;&nbsp;<em class="fa fa-{{isCollapsed ? 'plus': 'minus'}}"></em>
+    </a>
+</ng-template>
+
+<ng-container *ngTemplateOutlet="hasChildren ? subMainMenuLink: mainMenuLink; context: {$implicit: item}">
+
+</ng-container>
+<ng-container *ngIf="hasChildren">
+    <div class="collapse" id="submenu{{item._id}}" [ngbCollapse]="isCollapsed">
+        <ul class="flex-column nav pl-4">
+            <app-nav-item [items]="item.children" [isParent]="false" [parentCollapsed]="isCollapsed"></app-nav-item>
+        </ul>
+    </div>
+</ng-container>

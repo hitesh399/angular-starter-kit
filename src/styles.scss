@@ -1,5 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 /* You can add global styles to this file, and also import other style files */
+
+@import './assets/scss/core/variables';
+
 body,
 .wrapper {
   height: 100vh;
@@ -62,3 +65,7 @@ body,
   line-height: 1.5 !important;
   border-radius: 0.2rem !important;
 }
+
+.nav-link.active, .nav-link.active i, .nav-link.active em {
+      color: $primary-color !important
+  }

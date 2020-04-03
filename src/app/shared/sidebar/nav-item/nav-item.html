@@ -1,0 +1,8 @@
+<ng-container *ngFor="let item of menuItems; let i = index">
+    <li routerLinkActive="active" class="nav-item {{item.class}}">
+        <app-nav-single-item [myIndex]="i" (onOpen)="openParentItem($event)" [isParent]="isParent"
+            [parentCollapsed]="parentCollapsed" [currentOpen]="currentOpen" [item]="item"
+            [hasChildren]="item.children && !!item.children.length">
+        </app-nav-single-item>
+    </li>
+</ng-container>
