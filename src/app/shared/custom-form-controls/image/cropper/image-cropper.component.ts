@@ -13,7 +13,7 @@ export class ImageControlCropperComponent implements OnInit {
 
     @ViewChild(ImageCropperComponent, { static: true }) imageCropper: ImageCropperComponent
 
-    public modal: Object
+    public modal: any;
 
     public transform = {
         scale: 1,
@@ -31,7 +31,7 @@ export class ImageControlCropperComponent implements OnInit {
     cropped(value: ImageCroppedEvent) {
         this.output = value
     }
-    moveRight() {
+    moveRight(event) {
         if (this.canvasRotation === -180) {
             this.canvasRotation = 0
         }
@@ -40,7 +40,7 @@ export class ImageControlCropperComponent implements OnInit {
     cropperReady() {
         this.loaded = true
     }
-    moveLeft() {
+    moveLeft(event) {
         if (this.canvasRotation === 180) {
             this.canvasRotation = 0
         }
@@ -55,10 +55,10 @@ export class ImageControlCropperComponent implements OnInit {
         const zoom = parseInt(event.target.value)
         this.transform = { ...this.transform, scale: zoom }
     }
-    flipH() {
+    flipH(event) {
         this.transform = { ...this.transform, flipH: !this.transform.flipH }
     }
-    flipV(){
+    flipV(event){
         this.transform = { ...this.transform, flipV: !this.transform.flipV }
     }
 }

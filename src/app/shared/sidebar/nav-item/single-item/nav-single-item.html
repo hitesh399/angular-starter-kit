@@ -1,14 +1,16 @@
 <ng-template #mainMenuLink let-item>
-    <a [routerLink]="[item.path]" class="nav-link text-truncate d-flex align-items-center" routerLinkActive="active">
+    <a title="{{item.title}}"  [routerLink]="[item.path]"
+        class="nav-link text-truncate d-flex align-items-center" routerLinkActive="active">
         <i *ngIf="item.icon" class="fa {{item.icon}}"></i>
-        <span>{{item.title}}</span>
+        <span i18n="@@sidebarMenu">{{item.title}}</span>
     </a>
 </ng-template>
 <ng-template #subMainMenuLink let-item>
-    <a href="javascript:void(0);" class="nav-link text-truncate d-flex align-items-center" (click)="toggle($event)"
+    <a href="javascript:void(0);" title="{{item.title}}"
+        class="nav-link text-truncate d-flex align-items-center" (click)="toggle($event)"
         [attr.aria-expanded]="!isCollapsed" attr.aria-controls="submenu{{item._id}}">
         <i *ngIf="item.icon" class="fa {{item.icon}}"></i>
-        <span>{{item.title}}</span>&nbsp;&nbsp;<em class="fa fa-{{isCollapsed ? 'plus': 'minus'}}"></em>
+        <span  i18n="@@sidebarMenu">{{item.title}}</span>&nbsp;&nbsp;<em class="fa fa-{{isCollapsed ? 'plus': 'minus'}}"></em>
     </a>
 </ng-template>
 

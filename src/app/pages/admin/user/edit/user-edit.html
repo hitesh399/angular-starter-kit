@@ -1,4 +1,4 @@
-<form [formGroup]="userForm" (ngSubmit)="onSubmit(userForm)"  #myform="ngForm">
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()"  #myform="ngForm">
     <user-frm-cmp formControlName="user" btnLabel="update" [submitted]="myform.submitted"></user-frm-cmp>
 
 </form>

@@ -154,7 +154,7 @@ export class ImageFormControlComponent implements OnInit, OnDestroy, ControlValu
     }
   }
 
-  openCropper() {
+  openCropper(event?: Event) {
     if (!this.isFile || !this.aspectRatio) return
 
     this.modal.open(ImageControlCropperComponent, {
@@ -199,8 +199,17 @@ export class ImageFormControlComponent implements OnInit, OnDestroy, ControlValu
     })
   }
 
-  open() {
-    window.open(URL.createObjectURL(this.value), "_blank");
+  open(event: Event) {
+    event.preventDefault()
+    event.stopPropagation()
+
+    if (this.isFile) {
+      window.open(URL.createObjectURL(this.value), "_blank");
+    } else if (this.value) {
+      window.open(this.value, '_blank');
+    } else {
+      return;
+    }
   }
 
   ngOnDestroy() {

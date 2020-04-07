@@ -1,10 +1,14 @@
 <ng-template #defaultImgTpl>
     <div class="image-icon-container">
-        <img [src]="imageUrl" />
+        <a (click)="open($event)" href="javascript:void(0)">
+            <img [src]="imageUrl" />
+        </a>
     </div>
 </ng-template>
 <ng-template #defaultTpl>
-    <em class="fa fa-file" style="font-size: x-large;"></em>
+    <a (click)="open($event)" href="javascript:void(0)">
+        <em class="fa fa-file" style="font-size: x-large;"></em>
+    </a>
 </ng-template>
 
 <ng-template #simpleTpl>
@@ -17,7 +21,7 @@
 <div class="file-container">
     <input type="file" style="display: none;" [id]="ID" (change)="onFileChange($event)">
 
-    <div class="card" >
+    <div class="card">
         <div class="card-body">
             <div class="d-flex ">
                 <div class="w-100 d-flex align-content-center flex-wrap">
@@ -33,11 +37,13 @@
                     </div>
                 </div>
                 <div *ngIf="isFile" class="pl-2 flex-shrink-1 d-flex align-content-center flex-wrap">
-                    <em class="fa fa-trash-alt" style="font-size: x-large; cursor: pointer; " (click)="remove($event)"></em>
+                    <em class="fa fa-trash-alt" style="font-size: x-large; cursor: pointer; "
+                        (click)="remove($event)"></em>
                 </div>
                 <div class="pl-2 flex-shrink-1 d-flex align-content-center flex-wrap">
 
-                    <button class="btn btn-primary btn-sm choose-btn" (click)="openBrowser($event)" type="button">Browse</button>
+                    <button class="btn btn-primary btn-sm choose-btn" (click)="openBrowser($event)"
+                        type="button">Browse</button>
                 </div>
             </div>
         </div>

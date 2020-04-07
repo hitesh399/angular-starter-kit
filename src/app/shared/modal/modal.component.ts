@@ -24,7 +24,10 @@ export class ModalComponent implements OnInit {
         console.log('show Footer', this.showFooter)
     }
 
-    close() {
+    close(event?: Event) {
+        if (event instanceof Event) {
+            event.preventDefault()
+        }
         if (this.disabled) return
         this.modal.reject()
     }
@@ -32,7 +35,6 @@ export class ModalComponent implements OnInit {
         event.stopPropagation()
     }
     clickOutOfModalBox(event) {
-        console.log('I am outside', this.persistent)
         if (this.persistent) return
         event.preventDefault()
         this.close()

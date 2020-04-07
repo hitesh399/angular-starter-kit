@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'user-popup',
-    template: `<form [formGroup]="userFrom" (ngSubmit)="onSubmit(form)" #myForm="ngForm">
+    template: `<form [formGroup]="userFrom" (ngSubmit)="onSubmit()" #myForm="ngForm">
             <user-frm-cmp formControlName="user" [btnLabel]="btnLabel" submitted="myForm.submitted"></user-frm-cmp>
         </form>`
 })
@@ -28,7 +28,7 @@ export class UserPopupComponent implements OnInit {
     }
 
     onSubmit() {
-        console.log('On Submit...', this.userFrom)
+        // console.log('On Submit...', this.userFrom)
         if (this.userFrom.invalid) return;
 
         this.modal.close()

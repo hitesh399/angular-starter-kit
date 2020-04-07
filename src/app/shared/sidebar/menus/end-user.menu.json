@@ -2,6 +2,9 @@
     { 
         "path": "/end-user/dashboard", 
         "title": "Dashboard", 
+        "locale": {
+            "hi": "डैशबोर्ड"
+        },
         "icon": "fa-tachometer-alt", 
         "class": ""
     }

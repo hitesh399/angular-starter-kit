@@ -18,7 +18,7 @@ export class AppNavSingleItemComponent implements OnChanges {
         }
     }
 
-    @Input() item: object
+    @Input() item: any
     @Input() hasChildren: boolean = false
     @Input() parentCollapsed = true;
     @Input() isParent = false
@@ -30,12 +30,9 @@ export class AppNavSingleItemComponent implements OnChanges {
     public isCollapsed = true;
 
 
-    toggle() {
+    toggle(event: Event) {
         this.isCollapsed = this.isCollapsed ? false : true
         if (this.isParent && this.isCollapsed === false)
             this.onOpen.emit(this.myIndex)
     }
-
-
-
 }

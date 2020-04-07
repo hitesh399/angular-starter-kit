@@ -64,6 +64,36 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+            "production-hi": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "outputPath": "dist/angular8/hi/",
+              "i18nFile": "src/locale/messages.hi.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "hi",
+              "i18nMissingTranslation": "error"
+            },
+            "hi": {
+              "aot": true,
+              "outputPath": "dist/angular8/hi/",
+              "i18nFile": "src/locale/messages.hi.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "hi",
+              "i18nMissingTranslation": "error"
             }
           }
         },
@@ -75,6 +105,9 @@
           "configurations": {
             "production": {
               "browserTarget": "angular8:build:production"
+            },
+            "hi": {
+              "browserTarget": "angular8:build:hi"
             }
           }
         },

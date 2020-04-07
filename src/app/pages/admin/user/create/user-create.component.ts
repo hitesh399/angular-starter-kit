@@ -30,8 +30,6 @@ export class UserCreateComponent {
         })
     }
     onSubmit() {
-        
-        console.log('this.form', this.form)
         if (this.form.invalid) return
         this.form.disable()
         this.http.post('users', this.form.value.user).forEach((res) => {

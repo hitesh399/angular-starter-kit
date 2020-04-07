@@ -27,7 +27,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private element: ElementRef,
     private router: Router,
     private cookie: CookieService,
-    private menu : SideBarMenu
+    private menu: SideBarMenu
   ) {
     this.location = location;
     this.nativeElement = element.nativeElement;
@@ -47,14 +47,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     const mainPanel = <HTMLElement>document.querySelector('.main-panel .content')
-    mainPanel.removeEventListener('click', this.outerClick)
+    if (mainPanel) {
+      mainPanel.removeEventListener('click', this.outerClick)
+    }
     window.removeEventListener('resize', this.sidebarClose)
   }
   outerClick() {
     const html = document.getElementsByTagName('html')[0];
     const isNavOpen = html.classList.contains('nav-open')
-    if(isNavOpen) {
-       this.sidebarClose()
+    if (isNavOpen) {
+      this.sidebarClose()
     }
   }
   getTitle() {
